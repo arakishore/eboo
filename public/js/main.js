@@ -163,7 +163,7 @@
          loop:true,
      });
 
-      $('.attract-slider').slick({
+      $('.attract-slider').not('.partners-logo-track').slick({
          infinite: true,
          slidesToShow: 8,
          slidesToScroll: 1,

@@ -3,3 +3,181 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+.page-banner .breadcrumb-outer {
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+}
+
+.page-banner .bread-content nav {
+  position: static !important;
+  margin-bottom: 18px;
+}
+
+.page-banner .bread-content h1 {
+  font-size: 48px;
+  line-height: 1.15;
+}
+
+.legal-content-section {
+  padding: 90px 0;
+}
+
+.legal-content {
+  padding: 48px;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(22, 34, 65, 0.08);
+}
+
+.legal-intro {
+  margin-bottom: 34px;
+  padding-bottom: 30px;
+}
+
+.legal-intro h2 {
+  max-width: 760px;
+  color: #162241;
+}
+
+.legal-intro p,
+.legal-block p {
+  color: #5e6b7a;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.legal-updated {
+  color: #F56961 !important;
+  font-weight: 600;
+}
+
+.legal-block {
+  margin-bottom: 34px;
+}
+
+.legal-block:last-child {
+  margin-bottom: 0;
+}
+
+.legal-block h2 {
+  margin-bottom: 14px;
+  color: #162241;
+  font-size: 26px;
+}
+
+.legal-block h3 {
+  color: #162241;
+}
+
+.legal-block ul {
+  margin-top: 16px;
+}
+
+.legal-block ul li {
+  display: block;
+  margin-bottom: 12px;
+  padding-left: 28px;
+  color: #5e6b7a;
+  line-height: 1.75;
+}
+
+.legal-block ul li::before {
+  content: "\f00c";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  color: #F56961;
+  font-family: "FontAwesome";
+  font-size: 14px;
+}
+
+.partners-logo-section {
+  background: #fff;
+}
+
+.partners-logo-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.partners-logo-track {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 300%;
+  margin-bottom: 0;
+  animation: partnersLogoMarquee 28s linear infinite;
+}
+
+.partners-logo-track:hover {
+  animation-play-state: paused;
+}
+
+.partners .partners-logo-slide {
+  flex: 0 0 5.555556%;
+  max-width: 5.555556%;
+}
+
+.partners .partners-logo-slide .client-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partners .partners-logo-slide img {
+  filter: grayscale(100%);
+  opacity: 0.72;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.partners .partners-logo-slide a:hover img,
+.partners .partners-logo-slide a:focus img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+@keyframes partnersLogoMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 991px) {
+  .partners-logo-track {
+    width: 360%;
+  }
+}
+
+@media (max-width: 575px) {
+  .partners-logo-track {
+    width: 600%;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-banner .breadcrumb-outer {
+    min-height: 300px;
+  }
+
+  .page-banner .bread-content h1 {
+    font-size: 36px;
+  }
+
+  .legal-content-section {
+    padding: 60px 0;
+  }
+
+  .legal-content {
+    padding: 30px 22px;
+  }
+
+  .legal-block h2 {
+    font-size: 22px;
+  }
+}

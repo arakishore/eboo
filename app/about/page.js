@@ -1,6 +1,7 @@
 import AboutHero from "@/components/about/AboutHero";
 import AboutIntro from "@/components/about/AboutIntro";
 import AboutStory from "@/components/about/AboutStory";
+import PartnersLogoSlider from "@/components/PartnersLogoSlider";
 
 export const metadata = {
   title: "About Us | Eboo",
@@ -14,6 +15,7 @@ export default function AboutPage() {
       <AboutHero />
       <AboutIntro />
       <AboutStory />
+      <PartnersLogoSlider />
     </>
   );
 }
