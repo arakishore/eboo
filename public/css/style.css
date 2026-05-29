@@ -3518,10 +3518,12 @@ nav.navbar.navbar-default.navbar-sticky-in .logo-black {
   min-width: 98px;
   padding: 9px 12px;
   color: #fff;
-  background: #F56961;
-  border-radius: 6px;
+  background: #ff9800;
+  border-radius: 50%;
   text-align: center;
   box-shadow: 0 12px 24px rgba(245, 105, 97, 0.3);
+ 
+ 
 }
 .package-card-price-label {
   display: block;
@@ -8195,3 +8197,5 @@ ul.sidebar-tags li a:hover {
   }
 }
 
+
+ 
