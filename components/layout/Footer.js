@@ -1,4 +1,7 @@
+import Link from "next/link";
+import { siteConfig } from "@/config/site";
 export default function Footer() {
+    const currentYear = new Date().getFullYear();
   return (
     <>
       <footer className="pt-10" style={{ backgroundImage: "url(/images/bg/bg3.jpg)" }}>
@@ -9,7 +12,7 @@ export default function Footer() {
                               <div className="footer-about">
                                   <img src="/images/logo.png" alt="" />
                                   <p className="mt-3 mb-3">
-                                      In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna
+                                      Explore handpicked tour packages, holiday destinations, family vacations, honeymoon trips, adventure tours, and customized travel experiences with EBOO. Find your perfect getaway today
                                   </p>
                                   <div className="social-links">
                                       <ul>  
@@ -25,39 +28,41 @@ export default function Footer() {
                               <div className="footer-links text-center">
                                   <ul className="list">
                                       <li>
-                                          <a href="#">About Us</a>
+                                          <Link href="/about">About Us</Link>
                                       </li>
                                       <li>
-                                          <a href="#">Travel Booking</a>
+                                          <Link href="/destinations">Destinations</Link>
+                                      </li>
+
+                                      <li>
+                                          <Link href="/packages">Packages</Link>
+                                      </li>
+                                      {/* <li>
+                                          <Link href="/services">Services</Link>
+                                      </li> */}
+                                      <li>
+                                          <Link href="/faqs">Faq</Link>
                                       </li>
                                       <li>
-                                          <a href="#">Flight Booking</a>
-                                      </li>
-                                      <li>
-                                          <a href="#">Car Booking</a>
-                                      </li>
-                                      <li>
-                                          <a href="#">Blog</a>
-                                      </li>
-                                      <li>
-                                          <a href="#">Contact</a>
+                                          <Link href="/contact">Contact</Link>
                                       </li>
                                   </ul>
                               </div>
                               <div className="footer-listing-main d-lg-flex align-items-center justify-content-between mt-4 text-center">
                                   <div className="footer-listing white">
                                       <i className="fa fa-map-marked white mb-1"></i>
-                                      123 Collins Street, sydney, <br />Australia 750
+                                      {siteConfig.address.line1},  {siteConfig.address.line2},
+                                      <br />
+                                       {siteConfig.address.city}, {siteConfig.address.state}, {siteConfig.address.country}
                                   </div>
                                   <div className="footer-listing">
                                       <i className="fa fa-fax white mb-1"></i>
-                                      <p className="white mb-0">Toll Free: +47-252-254-2542</p>
-                                      <p className="white mb-0">Fax: +47-252-254-2542</p>
+                                      <p className="white mb-0">{siteConfig.contact.phone}</p>
+
                                   </div>
                                   <div className="footer-listing">
                                       <i className="fa fa-headphones white mb-1"></i>
-                                      <p className="white mb-0">Support@eboo.com</p>
-                                      <p className="white mb-0">info@eboo.com</p>
+                                      <p className="white mb-0">{siteConfig.contact.email}</p>
                                   </div>
                               </div>
                           </div>
@@ -68,7 +73,7 @@ export default function Footer() {
                   <div className="container">
                       <div className="copyright-inner">
                           <div className="copyright-text text-center">
-                              <p className="m-0 white">2026 eboo. All rights reserved.</p>
+                              <p className="m-0 white">{currentYear} eboo. All rights reserved.</p>
                           </div>
                       </div>    
                   </div>

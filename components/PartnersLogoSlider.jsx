@@ -1,3 +1,5 @@
+import { firstValue, toApiImageUrl } from "@/lib/api";
+
 const partnerLogos = [
   { src: "/images/clients/logo-01.png", alt: "Partner logo 1" },
   { src: "/images/clients/logo-02.png", alt: "Partner logo 2" },
@@ -9,6 +11,19 @@ const partnerLogos = [
   { src: "/images/clients/logo-01.png", alt: "Partner logo 8" },
   { src: "/images/clients/logo-02.png", alt: "Partner logo 9" },
 ];
+
+function normalizeLogo(logo, index) {
+  const fallback = partnerLogos[index % partnerLogos.length];
+  const name = firstValue(logo, ["name", "title", "alt"], fallback.alt);
+
+  return {
+    src: toApiImageUrl(
+      firstValue(logo, ["image", "logo", "logo_url", "image_url"]),
+      fallback.src
+    ),
+    alt: name,
+  };
+}
 
 function LogoItems({ logos, hidden = false }) {
   return logos.map((logo, index) => (
@@ -27,13 +42,17 @@ function LogoItems({ logos, hidden = false }) {
 }
 
 export default function PartnersLogoSlider({ logos = partnerLogos }) {
+  const items = (logos.length ? logos : partnerLogos)
+    .slice(0, 12)
+    .map((logo, index) => normalizeLogo(logo, index));
+
   return (
     <section className="partners bordernone pt-5 pb-5 partners-logo-section">
       <div className="container">
         <div className="partners-logo-viewport">
           <div className="row attract-slider partners-logo-track">
-            <LogoItems logos={logos} />
-            <LogoItems logos={logos} hidden />
+            <LogoItems logos={items} />
+            <LogoItems logos={items} hidden />
           </div>
         </div>
       </div>

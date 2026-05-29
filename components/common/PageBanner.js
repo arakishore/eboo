@@ -7,12 +7,12 @@ export default function PageBanner({
 }) {
   return (
     <section
-      className="breadcrumb-main pb-0 page-banner"
+      className="breadcrumb-main pb-0"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="breadcrumb-outer pt-10">
         <div className="container">
-          <div className="breadcrumb-content bread-content text-center pt-10">
+          <div className="breadcrumb-content bread-content pt-10">
             <nav aria-label="breadcrumb">
               <ul className="breadcrumb">
                 <li className="breadcrumb-item">

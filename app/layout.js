@@ -2,10 +2,12 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { siteConfig } from "@/config/site";
 
 export const metadata = {
-  title: "EBOO - Travel and Tours Booking Template",
-  description: "Travel and tours booking homepage",
+  title: siteConfig.seo.defaultTitle,
+  description: siteConfig.seo.defaultDescription,
+  keywords: siteConfig.seo.defaultKeywords,
 };
 
 export default function RootLayout({ children }) {
@@ -23,7 +25,7 @@ export default function RootLayout({ children }) {
         <link href="/css/style.css" rel="stylesheet" type="text/css" />
         <link href="/css/plugin.css" rel="stylesheet" type="text/css" />
         <link href="/css/about.css" rel="stylesheet" type="text/css" />
-        
+
         <link href="/fonts/flaticon.css" rel="stylesheet" type="text/css" />
         <link
           rel="stylesheet"
@@ -62,7 +64,8 @@ export default function RootLayout({ children }) {
         <Script src="/js/main.js" strategy="afterInteractive" />
         <Script src="/js/custom-swiper2.js" strategy="afterInteractive" />
         <Script src="/js/custom-nav.js" strategy="afterInteractive" />
-  
+        <Script src="/js/custom-accordian.js" strategy="afterInteractive" />
+        <Script src="/js/custom-navscroll.js" strategy="afterInteractive" />
       </body>
     </html>
   );

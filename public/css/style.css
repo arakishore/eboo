@@ -3443,6 +3443,175 @@ nav.navbar.navbar-default.navbar-sticky-in .logo-black {
   visibility: visible;
   z-index: 15;
 }
+.package-modern-card {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(22, 34, 65, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 10px 26px rgba(22, 34, 65, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.package-modern-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(22, 34, 65, 0.14);
+}
+.package-modern-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f7f7f7;
+}
+.package-modern-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+.package-modern-card:hover .package-modern-image img {
+  transform: scale(1.05);
+}
+.package-modern-image:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(22, 34, 65, 0.34), rgba(22, 34, 65, 0) 48%);
+  pointer-events: none;
+}
+.package-card-badges {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  max-width: calc(100% - 150px);
+}
+.package-card-badge {
+  max-width: 100%;
+  overflow: hidden;
+  color: #fff;
+  background: #F56961;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(245, 105, 97, 0.28);
+}
+.package-card-badge:nth-child(2) {
+  background: #162241;
+  box-shadow: 0 8px 18px rgba(22, 34, 65, 0.24);
+}
+.package-card-price-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  min-width: 98px;
+  padding: 9px 12px;
+  color: #fff;
+  background: #F56961;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 12px 24px rgba(245, 105, 97, 0.3);
+}
+.package-card-price-label {
+  display: block;
+  margin-bottom: 2px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.package-card-price-current {
+  display: block;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.05;
+}
+.package-card-price-old {
+  display: block;
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: line-through;
+}
+.package-card-price-request {
+  min-width: auto;
+  max-width: 112px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.package-modern-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 24px;
+}
+.package-modern-title {
+  margin-bottom: 13px;
+  font-size: 21px;
+  line-height: 1.25;
+}
+.package-modern-title:before {
+  display: none;
+}
+.package-modern-title a {
+  color: #17233f;
+}
+.package-modern-title a:hover {
+  color: #F56961;
+}
+.package-modern-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.package-modern-meta span {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.35;
+}
+.package-modern-meta i {
+  flex: 0 0 auto;
+  color: #F56961;
+}
+.package-modern-description {
+  display: -webkit-box;
+  min-height: 66px;
+  margin-bottom: 22px;
+  overflow: hidden;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.package-modern-action {
+  margin-top: auto;
+  text-align: center;
+}
+.package-modern-action .nir-btn {
+  padding: 11px 24px;
+}
 .trending .trend-box1 .trend-content-main .trend-last-main {
   opacity: 1;
   visibility: visible;
@@ -3845,6 +4014,29 @@ span.location-box {
   }
   .trending .trend-item .trend-content-main .trend-last-main .trend-last .trend-price span {
     font-size: 16px;
+  }
+  .package-modern-body {
+    padding: 19px 18px 22px;
+  }
+  .package-modern-title {
+    font-size: 19px;
+  }
+  .package-card-badges {
+    top: 12px;
+    left: 12px;
+    max-width: calc(100% - 132px);
+  }
+  .package-card-price-badge {
+    top: 12px;
+    right: 12px;
+    min-width: 90px;
+    padding: 8px 10px;
+  }
+  .package-card-price-current {
+    font-size: 19px;
+  }
+  .package-card-price-request {
+    font-size: 14px;
   }
 }
 /* ========================================= */

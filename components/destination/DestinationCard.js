@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Stars() {
   return (
     <div className="rating">
@@ -13,11 +15,12 @@ function Stars() {
 export default function DestinationCard({
   image,
   title,
+  slug,
   country,
   places,
-  price = "$350.00",
-  reviews,
+  city,
   ribbon,
+  short_description: shortDescription = "A wonderful little cottage right on the seashore - perfect for exploring.",
 }) {
   return (
     <div className="col-lg-4 col-md-6 col-xs-12 mb-4">
@@ -28,46 +31,23 @@ export default function DestinationCard({
               <span>{ribbon}</span>
             </div>
           ) : null}
-          <img src={image} alt="image" />
+          <img src={image} alt={title || "Destination"} />
         </div>
         <div className="trend-content-main">
           <div className="trend-content">
-            {reviews ? (
-              <div className="rating-main d-flex align-items-center pb-1">
-                <Stars />
-                <span className="ml-2">{reviews}</span>
-              </div>
-            ) : (
-              <div className="rating pb-1">
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-                <span className="fa fa-star checked"></span>
-              </div>
-            )}
+            
             <h4>
-              <a href="#">{title}</a>
+              <Link href={`/destinations/${slug}`}>{title}</Link>
             </h4>
             <p className="mb-0 pink">
               <i className="fa fa-eye mr-1"></i> {places} Visiting Places{" "}
-              <i className="fa fa-map-marker mr-1 ml-3"></i> {country}.
+              <i className="fa fa-map-marker mr-1 ml-3"></i> {country}, {city}
             </p>
           </div>
           <div className="trend-last-main">
             <p className="mb-0 trend-para">
-              A wonderful little cottage right on the seashore - perfect for exploring.
+              {shortDescription}
             </p>
-            <div className="trend-last d-flex align-items-center justify-content-between bg-navy">
-              <p className="mb-0 white">
-                <i className="fa fa-clock-o" aria-hidden="true"></i> 3 days &amp; 2 night
-              </p>
-              <div className="trend-price">
-                <p className="price white mb-0">
-                  From <span>{price}</span>
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
