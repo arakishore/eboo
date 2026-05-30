@@ -771,10 +771,6 @@ body {
   flex-direction: column;
 }
 
-.package-card-reveal {
-  display: contents;
-}
-
 .page-loading-spinner {
   width: 42px;
   height: 42px;

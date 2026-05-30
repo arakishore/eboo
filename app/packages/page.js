@@ -1,5 +1,4 @@
 import PageBanner from "@/components/common/PageBanner";
-import ScrollReveal from "@/components/common/ScrollReveal";
 import PackageCard from "@/components/packages/PackageCard";
 import { normalizePackages, packages as fallbackPackages } from "@/data/packages";
 import { getApiCollection } from "@/lib/api";
@@ -26,14 +25,11 @@ export default async function PackagesPage() {
                 <div className="row">
                   {packages.length ? (
                     packages.map((packageItem, index) => (
-                      <ScrollReveal
-                        className="package-card-reveal"
-                        delay={index * 0.08}
-                        direction="up"
+                      <PackageCard
                         key={packageItem.id || packageItem.slug}
-                      >
-                        <PackageCard packageItem={packageItem} />
-                      </ScrollReveal>
+                        packageItem={packageItem}
+                        revealDelay={index * 0.08}
+                      />
                     ))
                   ) : (
                     <div className="col-lg-12">

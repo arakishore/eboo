@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ScrollReveal from "@/components/common/ScrollReveal";
 import DestinationGallery from "@/components/destination/DestinationGallery";
 import PackageCard from "@/components/packages/PackageCard";
 import { fallbackDestinations, normalizeDestination } from "@/data/destinations";
@@ -180,14 +179,11 @@ export default async function DestinationDetailPage({ params }) {
             <div className="row">
               {destinationPackages.length ? (
                 destinationPackages.map((packageItem, index) => (
-                  <ScrollReveal
-                    className="package-card-reveal"
-                    delay={index * 0.08}
-                    direction="up"
+                  <PackageCard
                     key={packageItem.id || packageItem.slug}
-                  >
-                    <PackageCard packageItem={packageItem} />
-                  </ScrollReveal>
+                    packageItem={packageItem}
+                    revealDelay={index * 0.08}
+                  />
                 ))
               ) : (
                 <div className="col-lg-12">

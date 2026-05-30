@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ScrollReveal from "@/components/common/ScrollReveal";
 import { packageImageFallback } from "@/data/packages";
 
 function getFormattedPrice(price) {
@@ -95,7 +96,7 @@ function PackagePriceBadge({ startingPrice, salePrice }) {
   );
 }
 
-export default function PackageCard({ packageItem }) {
+export default function PackageCard({ packageItem, revealDelay = 0 }) {
   const {
     title,
     slug,
@@ -121,48 +122,50 @@ export default function PackageCard({ packageItem }) {
 
   return (
     <div className="col-lg-4 col-md-6 col-xs-12 mb-4">
-      <article className="package-modern-card">
-        <div className="package-modern-image">
-          <img src={imageUrl} alt={title} />
+      <ScrollReveal direction="up" delay={revealDelay}>
+        <article className="package-modern-card">
+          <div className="package-modern-image">
+            <img src={imageUrl} alt={title} />
 
-          {categoriesTag.length ? (
-            <div className="package-card-badges" aria-label="Package tags">
-              {categoriesTag.slice(0, 2).map((category) => (
-                <span className="package-card-badge" key={category.id}>
-                  {category.name}
-                </span>
-              ))}
+            {categoriesTag.length ? (
+              <div className="package-card-badges" aria-label="Package tags">
+                {categoriesTag.slice(0, 2).map((category) => (
+                  <span className="package-card-badge" key={category.id}>
+                    {category.name}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+
+            <PackagePriceBadge startingPrice={starting_price} salePrice={sale_price} />
+          </div>
+
+          <div className="package-modern-body">
+            <h4 className="package-modern-title">
+              <Link href={`/packages/${slug}`}>{title}</Link>
+            </h4>
+
+            <div className="package-modern-meta">
+              <span>
+                <i className="fa fa-clock-o" aria-hidden="true"></i>
+                {duration}
+              </span>
+              <span>
+                <i className="fa fa-map-marker" aria-hidden="true"></i>
+                {locationName || destination?.name || "Unknown Location"}
+              </span>
             </div>
-          ) : null}
 
-          <PackagePriceBadge startingPrice={starting_price} salePrice={sale_price} />
-        </div>
+            <p className="package-modern-description">{shortDescription}</p>
 
-        <div className="package-modern-body">
-          <h4 className="package-modern-title">
-            <Link href={`/packages/${slug}`}>{title}</Link>
-          </h4>
-
-          <div className="package-modern-meta">
-            <span>
-              <i className="fa fa-clock-o" aria-hidden="true"></i>
-              {duration}
-            </span>
-            <span>
-              <i className="fa fa-map-marker" aria-hidden="true"></i>
-              {locationName || destination?.name || "Unknown Location"}
-            </span>
+            <div className="package-modern-action">
+              <Link href={`/packages/${slug}`} className="nir-btn">
+                View Details <i className="fa fa-long-arrow-alt-right"></i>
+              </Link>
+            </div>
           </div>
-
-          <p className="package-modern-description">{shortDescription}</p>
-
-          <div className="package-modern-action">
-            <Link href={`/packages/${slug}`} className="nir-btn">
-              View Details <i className="fa fa-long-arrow-alt-right"></i>
-            </Link>
-          </div>
-        </div>
-      </article>
+        </article>
+      </ScrollReveal>
     </div>
   );
 }
