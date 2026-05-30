@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ScrollReveal from "@/components/common/ScrollReveal";
 import DestinationGallery from "@/components/destination/DestinationGallery";
 import PackageCard from "@/components/packages/PackageCard";
 import { fallbackDestinations, normalizeDestination } from "@/data/destinations";
@@ -113,7 +114,7 @@ export default async function DestinationDetailPage({ params }) {
       >
         <div className="breadcrumb-outer pt-10">
           <div className="container">
-            <div className="breadcrumb-content bread-content text-center pt-10">
+            <div className="breadcrumb-content bread-content pt-10">
               <nav aria-label="breadcrumb">
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
@@ -178,8 +179,15 @@ export default async function DestinationDetailPage({ params }) {
           <div className="trend-box">
             <div className="row">
               {destinationPackages.length ? (
-                destinationPackages.map((packageItem) => (
-                  <PackageCard key={packageItem.slug} packageItem={packageItem} />
+                destinationPackages.map((packageItem, index) => (
+                  <ScrollReveal
+                    className="package-card-reveal"
+                    delay={index * 0.08}
+                    direction="up"
+                    key={packageItem.id || packageItem.slug}
+                  >
+                    <PackageCard packageItem={packageItem} />
+                  </ScrollReveal>
                 ))
               ) : (
                 <div className="col-lg-12">

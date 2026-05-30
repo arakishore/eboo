@@ -8270,7 +8270,10 @@ ul.sidebar-tags li a:hover {
 
 @media (max-width: 768px) {
   .footer-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+  .breadcrumb{
+    display: none;
   }
 }
 

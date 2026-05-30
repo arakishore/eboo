@@ -23,6 +23,17 @@ export default function ScrollReveal({
     gsap.registerPlugin(ScrollTrigger);
 
     const element = elementRef.current;
+    if (!element) {
+      return undefined;
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      gsap.set(element, { autoAlpha: 1, x: 0, y: 0 });
+      return undefined;
+    }
+
     const selectedOffset = offsets[direction] || offsets.up;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     const fromVars = isMobile ? offsets.up : selectedOffset;

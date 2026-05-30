@@ -96,8 +96,12 @@ export default async function DestinationsPage() {
               <div className="trend-box">
                 <div className="row">
                   {destinations.length ? (
-                    destinations.map((destination) => (
-                      <DestinationCard key={destination.slug} {...destination} />
+                    destinations.map((destination, index) => (
+                      <DestinationCard
+                        key={destination.slug}
+                        {...destination}
+                        revealDelay={index * 0.08}
+                      />
                     ))
                   ) : (
                     <div className="col-lg-12">
