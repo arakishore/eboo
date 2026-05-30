@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PackageEnquiryModal from "@/components/packages/PackageEnquiryModal";
+import PackageGallery from "@/components/packages/PackageGallery";
+import PackageItineraryAccordion from "@/components/packages/PackageItineraryAccordion";
 import {
   normalizePackage,
-  packageImageFallback,
   packages as fallbackPackages,
 } from "@/data/packages";
 import { getApiItem } from "@/lib/api";
-
-//const itinerary = [];
 
 export function generateStaticParams() {
   return fallbackPackages.map((packageItem) => ({
@@ -41,64 +40,18 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function ItineraryItem({
-  day,
-  day_number,
-  title,
-  description,
-  meals,
-  overnight_stay,
-  active = false,
-}) {
-  const dayLabel = day || day_number;
-
-  return (
-    <div className={`accrodion ${active ? "active" : ""}`}>
-      <div className="accrodion-title">
-        <h5 className="mb-0">
-          <span>Day {dayLabel}</span> - {title}
-        </h5>
-      </div>
-
-      <div
-        className="accrodion-content"
-        style={{ display: active ? "block" : "none" }}
-      >
-        <div className="inner">
-          {description ? <p>{description}</p> : null}
-
-          {meals ? (
-            <p className="mb-1">
-              <strong>Meals:</strong> {meals}
-            </p>
-          ) : null}
-
-          {overnight_stay ? (
-            <p className="mb-0">
-              <strong>Overnight Stay:</strong> {overnight_stay}
-            </p>
-          ) : null}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function PackageDetailPage({ params }) {
   const { slug } = await params;
   const fallbackPackage = fallbackPackages.find((item) => item.slug === slug) || null;
   const packageResponse = await getApiItem(`packages/${slug}`, fallbackPackage);
   const packageItem = packageResponse ? normalizePackage(packageResponse) : null;
-  const itinerary = packageItem?.itineraries || [];
+
   if (!packageItem) {
     notFound();
   }
 
   const destinationName = packageItem.destination?.name || "";
-  const galleryImages = [
-    packageItem.featured_image
-  ];
-  console.log(packageItem);
+
   return (
     <>
       <div
@@ -154,24 +107,7 @@ export default async function PackageDetailPage({ params }) {
           <div className="row">
             <div className="col-lg-12">
               <div className="single-content">
-                <div className="description-images mb-4">
-                  <div className="thumbnail-images">
-                    <div className="slider-store">
-                      {galleryImages.map((image, index) => (
-                        <div key={`store-${image}-${index}`}>
-                          <img src={image} alt={packageItem.title} />
-                        </div>
-                      ))}
-                    </div>
-                    <div className="slider-thumbs">
-                      {galleryImages.map((image, index) => (
-                        <div key={`thumb-${image}-${index}`}>
-                          <img src={image} alt={packageItem.title} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <PackageGallery packageItem={packageItem} />
 
                 <div className="description" id="description">
                   <div className="single-full-title border-b mb-2 pb-2">
@@ -299,14 +235,7 @@ export default async function PackageDetailPage({ params }) {
                   id="itinerary"
                   data-grp-name="faq-accrodion"
                 >
-                  <h4>Tour Itinerary</h4>
-                  {itinerary.length > 0 && itinerary.map((item, index) => (
-                    <ItineraryItem
-                      key={item.id || `${item.day_number}-${item.title}`}
-                      {...item}
-                      active={index === 0}
-                    />
-                  ))}
+                  <PackageItineraryAccordion itineraries={packageItem.itineraries} />
                 </div>
 
               </div>

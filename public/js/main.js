@@ -68,52 +68,9 @@
          }
      });
 
-     // Slick SLider
-     $('.slider-store').slick({
-         slidesToShow: 1,
-         slidesToScroll: 1,
-         arrows: false,
-         dots: false,
-         fade: true,
-         autoplay: true,
-         asNavFor: '.slider-thumbs'
-     });
+     // Package detail gallery is handled by React Swiper.
 
-     $('.slider-thumbs').slick({
-         slidesToShow: 5,
-         slidesToScroll: 1,
-         asNavFor: '.slider-store',
-         dots: false,
-         arrows: true,
-         autoplay: true,
-         centerMode: true,
-         focusOnSelect: true,
-         responsive: [{
-             breakpoint: 800,
-             settings: {
-                 arrows:false,
-             }
-         }]
-
-     });
-
-     $('.review-slider').slick({
-         infinite: true,
-         slidesToShow: 2,
-         slidesToScroll: 1,
-         arrows: false,
-         dots: false,
-         rows:0,
-         autoplay: true,
-         speed: 2000,
-         loop:true,
-         responsive: [{
-             breakpoint: 800,
-             settings: {
-                 slidesToShow: 1
-             }
-         }]
-     });
+     // Disabled for the React Swiper-powered homepage TestimonialSection.
 
      $('.review-slider1').slick({
          infinite: true,

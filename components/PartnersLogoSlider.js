@@ -1,26 +1,11 @@
 import { firstValue, toApiImageUrl } from "@/lib/api";
 
-const partnerLogos = [
-  { src: "/images/clients/logo-01.png", alt: "Partner logo 1" },
-  { src: "/images/clients/logo-02.png", alt: "Partner logo 2" },
-  { src: "/images/clients/logo-03.png", alt: "Partner logo 3" },
-  { src: "/images/clients/logo-04.png", alt: "Partner logo 4" },
-  { src: "/images/clients/logo-02.png", alt: "Partner logo 5" },
-  { src: "/images/clients/logo-03.png", alt: "Partner logo 6" },
-  { src: "/images/clients/logo-04.png", alt: "Partner logo 7" },
-  { src: "/images/clients/logo-01.png", alt: "Partner logo 8" },
-  { src: "/images/clients/logo-02.png", alt: "Partner logo 9" },
-];
-
 function normalizeLogo(logo, index) {
-  const fallback = partnerLogos[index % partnerLogos.length];
-  const name = firstValue(logo, ["name", "title", "alt"], fallback.alt);
+  const name = firstValue(logo, ["name", "title", "alt"], `Partner logo ${index + 1}`);
+  const image = firstValue(logo, ["image", "logo", "logo_url", "image_url"]);
 
   return {
-    src: toApiImageUrl(
-      firstValue(logo, ["image", "logo", "logo_url", "image_url"]),
-      fallback.src
-    ),
+    src: image ? toApiImageUrl(image, "") : "",
     alt: name,
   };
 }
@@ -41,10 +26,19 @@ function LogoItems({ logos, hidden = false }) {
   ));
 }
 
-export default function PartnersLogoSlider({ logos = partnerLogos }) {
-  const items = (logos.length ? logos : partnerLogos)
+export default function PartnersLogoSlider({ logos = [] }) {
+  if (!logos.length) {
+    return null;
+  }
+
+  const items = logos
     .slice(0, 12)
-    .map((logo, index) => normalizeLogo(logo, index));
+    .map((logo, index) => normalizeLogo(logo, index))
+    .filter((logo) => logo.src);
+
+  if (!items.length) {
+    return null;
+  }
 
   return (
     <section className="partners bordernone pt-5 pb-5 partners-logo-section">

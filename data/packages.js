@@ -126,6 +126,12 @@ export function normalizePackage(packageItem = {}, index = 0) {
   const inclusions = packageItem.inclusions || {};
   const exclusions = packageItem.exclusions || {};
   const facts = packageItem.facts || {};
+  const gallery = Array.isArray(packageItem.gallery)
+    ? packageItem.gallery
+        .map((image) => toApiImageUrl(image, ""))
+        .filter(Boolean)
+    : [];
+
   return {
     id: firstValue(packageItem, ["id", "package_id"], index + 1),
     title,
@@ -137,6 +143,7 @@ export function normalizePackage(packageItem = {}, index = 0) {
       normalizeSlug(title, `package-${index + 1}`)
     ),
     featured_image: toApiImageUrl(packageItem.featured_image, packageImageFallback),
+    gallery: gallery,
     duration: firstValue(
       packageItem,
       ["duration", "days", "no_of_days", "package_duration"],

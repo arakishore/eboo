@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { firstValue } from "@/lib/api";
 
 export function normalizeFaq(faq, index) {
@@ -13,6 +16,7 @@ export function normalizeFaq(faq, index) {
 
 export default function FaqAccordion({ faqs = [] }) {
   const items = faqs.map((faq, index) => normalizeFaq(faq, index));
+  const [activeIndex, setActiveIndex] = useState(0);
 
   if (!items.length) {
     return (
@@ -28,13 +32,27 @@ export default function FaqAccordion({ faqs = [] }) {
   return (
     <div className="accrodion-grp faq-accrodion" data-grp-name="faq-accrodion">
       {items.map((faq, index) => (
-        <div className={`accrodion ${index === 0 ? "active" : ""}`} key={faq.question}>
-          <div className="accrodion-title">
+        <div
+          className={`accrodion ${activeIndex === index ? "active" : ""}`}
+          key={faq.question}
+        >
+          <div
+            className="accrodion-title"
+            onClick={() => setActiveIndex(index)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setActiveIndex(index);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+          >
             <h5 className="mb-0">{faq.question}</h5>
           </div>
           <div
             className="accrodion-content"
-            style={{ display: index === 0 ? "block" : "none" }}
+            style={{ display: activeIndex === index ? "block" : "none" }}
           >
             <div className="inner">
               <p>{faq.answer}</p>
