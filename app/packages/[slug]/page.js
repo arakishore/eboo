@@ -1,4 +1,4 @@
-import Link from "next/link";
+import PageBanner from "@/components/common/PageBanner";
 import { notFound } from "next/navigation";
 import PackageEnquiryModal from "@/components/packages/PackageEnquiryModal";
 import PackageGallery from "@/components/packages/PackageGallery";
@@ -54,29 +54,7 @@ export default async function PackageDetailPage({ params }) {
 
   return (
     <>
-      <div
-        className="breadcrumb-main pb-0"
-        style={{ backgroundImage: "url(/images/bg/bg8.jpg)" }}
-      >
-        <div className="breadcrumb-outer pt-10">
-          <div className="container">
-            <div className="breadcrumb-content bread-content pt-10">
-              <nav aria-label="breadcrumb">
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link href="/">Home</Link>
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page">
-                    Package Detail
-                  </li>
-                </ul>
-              </nav>
-              <h2 className="mb-0 white text-uppercase">{packageItem.title}</h2>
-            </div>
-          </div>
-        </div>
-        <div className="dot-overlay"></div>
-      </div>
+       <PageBanner title={packageItem.title} breadcrumbLabel="Package Detail" /> 
 
       <div className="tabs-navbar1 bg-white sticky1 p-4">
         <div className="row">

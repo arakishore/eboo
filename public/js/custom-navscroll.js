@@ -22,14 +22,14 @@
       });
 
 
-$(window).scroll(function(){
+// $(window).scroll(function(){
 
-  if( $(window).scrollTop() > 10 ){
+//   if( $(window).scrollTop() > 10 ){
 
-    $('.tabs-navbar1').addClass('navbar-sticky')
+//     $('.tabs-navbar1').addClass('navbar-sticky')
 
-  } else {
-    $('.tabs-navbar1').removeClass('navbar-sticky')
-  }
-});
+//   } else {
+//     $('.tabs-navbar1').removeClass('navbar-sticky')
+//   }
+// });
       

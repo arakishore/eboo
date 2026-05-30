@@ -7,7 +7,7 @@ export default function AboutIntro() {
         <div className="row align-items-center">
           <div className="col-lg-6 mb-4 mb-lg-0">
             <ScrollReveal direction="left" className="about-image-frame">
-              <img src="/images/new-deal/deal3.jpg" alt="Travelers exploring a scenic destination" />
+              <img src="/images/dummy.jpg" alt="Travelers exploring a scenic destination" />
             </ScrollReveal>
           </div>
           <div className="col-lg-6">
@@ -46,14 +46,12 @@ export default function AboutIntro() {
                 Whether you want quiet beaches, cultural discovery, mountain escapes, or a
                 smooth multi-city holiday, we help turn the idea into a journey that fits.
               </p>
-              <a href="#" className="nir-btn">
-                Plan Your Journey
-              </a>
+               
             </ScrollReveal>
           </div>
           <div className="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
             <ScrollReveal direction="right" className="about-image-frame about-image-frame--offset">
-              <img src="/images/destination/destination8.jpg" alt="Beautiful travel destination" />
+              <img src="/images/dummy.jpg" alt="Beautiful travel destination" />
             </ScrollReveal>
           </div>
         </div>
@@ -61,7 +59,7 @@ export default function AboutIntro() {
 
           <div className="col-lg-6 mb-4 mb-lg-0">
             <ScrollReveal direction="left" className="about-image-frame">
-              <img src="/images/new-deal/deal3.jpg" alt="Travelers exploring a scenic destination" />
+              <img src="/images/dummy.jpg" alt="Travelers exploring a scenic destination" />
             </ScrollReveal>
           </div>
           <div className="col-lg-6">

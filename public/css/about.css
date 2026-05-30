@@ -1,14 +1,20 @@
 .about-hero-premium {
   position: relative;
+  min-height: 240vh;
+  background: #08111f;
+}
+
+.about-hero-sticky {
+  position: sticky;
+  top: 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #08111f;
   isolation: isolate;
 }
 
-.about-hero-premium .container {
+.about-hero-sticky .container {
   position: relative;
   z-index: 4;
 }
@@ -294,6 +300,10 @@
 
 @media (max-width: 991px) {
   .about-hero-premium {
+    min-height: 210vh;
+  }
+
+  .about-hero-sticky {
     min-height: 780px;
   }
 
@@ -328,6 +338,10 @@
 
 @media (max-width: 575px) {
   .about-hero-premium {
+    min-height: 200vh;
+  }
+
+  .about-hero-sticky {
     min-height: 700px;
   }
 

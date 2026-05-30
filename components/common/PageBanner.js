@@ -10,7 +10,7 @@ export default function PageBanner({
       className="breadcrumb-main pb-0"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="breadcrumb-outer pt-10">
+      <div className="breadcrumb-outer">
         <div className="container">
           <div className="breadcrumb-content bread-content pt-10">
             <nav aria-label="breadcrumb">
@@ -29,5 +29,7 @@ export default function PageBanner({
       </div>
       <div className="dot-overlay"></div>
     </section>
+
+    
   );
 }

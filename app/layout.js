@@ -63,8 +63,6 @@ export default function RootLayout({ children }) {
         <Script src="/js/plugin.js" strategy="afterInteractive" />
         <Script src="/js/main.js" strategy="afterInteractive" />
         {/* custom-swiper2.js is disabled because HeroSection uses Swiper React. */}
-        <Script src="/js/custom-nav.js" strategy="afterInteractive" />
-        <Script src="/js/custom-navscroll.js" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -1,115 +1,152 @@
-"use client";
+// Header83.jsx
+'use client'
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from 'react'
+import Image from 'next/image'
+import styles from './abouthero.module.css'
 
-const heroImages = [
+const IMAGES1 = [
+  { src: '/images/hero-1.webp', alt: 'Paraglider over Salalah', hide: true },
+  { src: '/images/hero-2.webp', alt: 'Private riverside setup' },
+  { src: '/images/hero-3.webp', alt: 'Muttrah souq at night', hide: true },
+  { src: '/images/hero-4.webp', alt: 'Arabian dhow on calm water', hide: true },
+  { src: '/images/hero-5.webp', alt: 'Camel trek in the desert' },
+  { src: '/images/hero-6.webp', alt: 'Nizwa Fort', hide: true },
+  { src: '/images/hero-7.webp', alt: 'Private event table setup', hide: true },
+  { src: '/images/hero-8.webp', alt: 'Nizwa Souq building' },
+  { src: '/images/hero-9.webp', alt: 'Hotel with pink skies', hide: true },
+]
+
+const IMAGES = [
   {
     src: "/images/about/hero-journey.jpg",
     alt: "Scenic travel road through a mountain landscape",
-    className: "about-hero-card about-hero-card--large fade-up",
+    hide: true, 
   },
   {
     src: "/images/about/city-escape.jpg",
     alt: "Luxury city escape destination",
-    className: "about-hero-card about-hero-card--tall fade-up fade-delay-1",
+     hide: true,
   },
   {
-    src: "/images/about/coastal-stay.jpg",
+    src: "/images/about/mountain-view.jpg",
     alt: "Comfortable coastal travel stay",
-    className: "about-hero-card fade-up fade-delay-2",
+    hide: true,
   },
   {
     src: "/images/about/mountain-view.jpg",
     alt: "Mountain destination view for travelers",
-    className: "about-hero-card fade-up fade-delay-3",
+   hide: true,
   },
   {
     src: "/images/about/quiet-retreat.jpg",
     alt: "Quiet retreat surrounded by nature",
-    className: "about-hero-card about-hero-card--wide fade-up fade-delay-4",
+    hide: true,
+  },
+   {
+    src: "/images/about/city-escape.jpg",
+    alt: "Luxury city escape destination",
+     hide: true,
+  },
+  {
+    src: "/images/about/hero-journey.jpg",
+    alt: "Scenic travel road through a mountain landscape",
+    hide: false, 
+  },
+  {
+    src: "/images/about/city-escape.jpg",
+    alt: "Luxury city escape destination",
+     hide: false,
+  },
+  {
+    src: "/images/about/mountain-view.jpg",
+    alt: "Comfortable coastal travel stay",
+    hide: false,
   },
 ];
 
 export default function AboutHero() {
-  const sectionRef = useRef(null);
-  const featureRef = useRef(null);
-  const collageRef = useRef(null);
-  const contentRef = useRef(null);
+  const componentRef = useRef(null)   // the 300vh root
+  const contentRef = useRef(null)
+  const gridRef = useRef(null)
+  const overlayRef = useRef(null)
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    const component = componentRef.current
+    if (!component) return
 
-    const context = gsap.context(() => {
-      const cards = gsap.utils.toArray(".about-hero-card");
+    const getInitialScale = () => window.innerWidth >= 768 ? 3.2 : 3.4
 
-      gsap.set(collageRef.current, {
-        autoAlpha: 0.18,
-        y: 90,
-        rotate: -2,
-        scale: 1.18,
-      });
-      gsap.set(cards, {
-        autoAlpha: 0,
-        y: 70,
-        scale: 0.94,
-      });
-      gsap.set(featureRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        scale: 1,
-      });
+    const onScroll = () => {
+      const rect = component.getBoundingClientRect()
+      const sectionH = component.offsetHeight
+      const progress = Math.max(0, Math.min(1,
+        -rect.top / (sectionH - window.innerHeight)
+      ))
 
-      const timeline = gsap.timeline({
-        defaults: { ease: "power2.out" },
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=140%",
-          scrub: 0.8,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+      if (contentRef.current)
+        contentRef.current.style.opacity = String(Math.max(0, 1 - progress / 0.24))
 
-      timeline
-        .to(featureRef.current, { autoAlpha: 0, y: -95, scale: 0.74, duration: 1 }, 0)
-        .to(collageRef.current, { autoAlpha: 1, y: 0, rotate: -2, scale: 1, duration: 1 }, 0)
-        .to(cards, { autoAlpha: 1, y: 0, scale: 1, stagger: 0.08, duration: 0.82 }, 0.12)
-        .to(contentRef.current, { y: -44, scale: 0.9, duration: 1 }, 0);
-    }, sectionRef);
+      if (overlayRef.current) {
+        const p = Math.max(0, (progress - 0.24) / 0.26)
+        overlayRef.current.style.opacity = String(1 - p)
+      }
 
-    return () => context.revert();
-  }, []);
+      if (gridRef.current) {
+        const initScale = getInitialScale()
+        const scale = initScale - (initScale - 1) * Math.min(1, progress / 0.6)
+        gridRef.current.style.transform = `scale(${scale})`
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <section className="about-hero-premium" ref={sectionRef}>
-      <div className="about-hero-feature" ref={featureRef} aria-hidden="true">
-        <img src="/images/about/hero-journey.jpg" alt="Immersive luxury travel landscape" />
-      </div>
-      <div className="about-hero-collage" ref={collageRef} aria-hidden="true">
-        {heroImages.map((image) => (
-          <div className={image.className} key={image.src}>
-            <img src={image.src} alt={image.alt} />
+    <div ref={componentRef} className={styles.component}>
+      <div className={styles.contentWrapper}>  {/* sticky 100vh */}
+
+        {/* bg layer */}
+        <div className={styles.bgImages}>
+          <div ref={overlayRef} className={styles.overlay} />
+          <div ref={gridRef} className={styles.grid}>
+            {IMAGES.map((img, i) => (
+              <div
+                key={i}
+                className={[
+                  styles.imageWrapper,
+                  img.hide ? styles.hideMobile : ''
+                ].join(' ')}
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className={styles.image}
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="about-hero-overlay"></div>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-12 col-xl-12">
-            <div className="about-hero-content text-center fade-up" ref={contentRef}>
-              <span className="about-eyebrow">Eboo Travel</span>
-              <h1>Creating unforgettable journeys around the world</h1>
-              <p>
-                Travel experiences designed with comfort, adventure, and local expertise.
-              </p>
+        </div>
+
+        {/* text layer on top */}
+        <div ref={contentRef} className={styles.content}>
+          
+           <div className="row justify-content-center">
+            <div className="col-lg-12 col-xl-12">
+              <div className="about-hero-content text-center fade-up" ref={contentRef}>
+                <span className="about-eyebrow">Eboo Travel</span>
+                <h1>Creating unforgettable journeys around the world</h1>
+               
+              </div>
             </div>
           </div>
         </div>
+
       </div>
-    </section>
-  );
+    </div>
+  )
 }

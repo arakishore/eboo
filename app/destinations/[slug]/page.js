@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import DestinationGallery from "@/components/destination/DestinationGallery";
 import PackageCard from "@/components/packages/PackageCard";
 import { fallbackDestinations, normalizeDestination } from "@/data/destinations";
 import { normalizePackages, packages as fallbackPackages } from "@/data/packages";
@@ -92,20 +93,6 @@ async function getDestinationPackages(destination) {
   );
 }
 
-function getGalleryImages(destination) {
-  const images = [
-    ...(destination.gallery || []),
-    destination.image,
-    destination.banner_image,
-  ].filter(Boolean);
-
-  const uniqueImages = [...new Set(images)];
-
-  return uniqueImages.length
-    ? uniqueImages.slice(0, 6)
-    : ["/images/bg/bg1.jpg", "/images/bg/bg2.jpg", "/images/bg/bg3.jpg"];
-}
-
 export default async function DestinationDetailPage({ params }) {
   const { slug } = await params;
   const destination = await getDestinationBySlug(slug);
@@ -115,7 +102,6 @@ export default async function DestinationDetailPage({ params }) {
   }
 
   const destinationPackages = await getDestinationPackages(destination);
-  const galleryImages = getGalleryImages(destination);
   const pageTitle = destination.name || destination.title;
   const locationLabel = [destination.city, destination.country].filter(Boolean).join(", ");
 
@@ -221,15 +207,7 @@ export default async function DestinationDetailPage({ params }) {
               A quick look at the places and experiences connected with this destination.
             </p>
           </div>
-          <div className="row">
-            {galleryImages.map((image, index) => (
-              <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={`${image}-${index}`}>
-                <div className="destination-gallery-item">
-                  <img src={image} alt={`${pageTitle} gallery ${index + 1}`} />
-                </div>
-              </div>
-            ))}
-          </div>
+          <DestinationGallery destination={destination} />
         </div>
       </section>
 

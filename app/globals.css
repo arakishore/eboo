@@ -563,8 +563,24 @@ body {
   padding: 90px 0 66px;
 }
 
+.destination-gallery-masonry {
+  column-count: 3;
+  column-gap: 24px;
+}
+
 .destination-gallery-item {
-  aspect-ratio: 4 / 3;
+  break-inside: avoid;
+  margin-bottom: 24px;
+}
+
+.destination-gallery-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .destination-gallery-item img {
@@ -723,6 +739,15 @@ body {
     margin-right: 0 !important;
   }
 
+  .destination-gallery-masonry {
+    column-count: 2;
+    column-gap: 18px;
+  }
+
+  .destination-gallery-item {
+    margin-bottom: 18px;
+  }
+
   .destination-gallery-section .section-title,
   #destination-packages .section-title {
     width: 100% !important;
@@ -730,6 +755,12 @@ body {
 
   .destination-enquiry-cta {
     padding: 34px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .destination-gallery-masonry {
+    column-count: 1;
   }
 }
 .page-loading {

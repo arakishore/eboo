@@ -15,7 +15,7 @@ export default async function Home() {
     destinationResponse,
     packageResponse,
     testimonials,
-    partners,    
+    partners,
   ] = await Promise.all([
     getApiCollection("banners", []),
     getApiCollection("destinations", fallbackDestinations),

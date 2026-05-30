@@ -35,7 +35,7 @@ export default function HeroSection({ banners = [] }) {
 
   return (
     <section className="banner overflow-hidden">
-      <div className="slider slider1">
+      <div className="slider slider1" suppressHydrationWarning>
         <Swiper
           modules={[Autoplay, EffectFade, Navigation, Pagination]}
           className="swiper-container"
