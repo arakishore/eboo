@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import TurnstileCaptcha from "@/components/common/TurnstileCaptcha";
+import { ContactEnquiryError, submitContactEnquiry } from "@/lib/contact-enquiry";
 
 const initialForm = {
   name: "",
@@ -10,10 +12,18 @@ const initialForm = {
   message: "",
 };
 
+function getErrorText(error) {
+  return Array.isArray(error) ? error[0] : error;
+}
+
 export default function ContactForm() {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [captchaKey, setCaptchaKey] = useState(0);
 
   const validate = () => {
     const nextErrors = {};
@@ -23,9 +33,8 @@ export default function ContactForm() {
     if (!emailPattern.test(formData.email.trim())) {
       nextErrors.email = "Please enter a valid email address.";
     }
-    if (!formData.phone.trim()) nextErrors.phone = "Please enter your phone number.";
-    if (!formData.subject.trim()) nextErrors.subject = "Please enter a subject.";
     if (!formData.message.trim()) nextErrors.message = "Please enter your message.";
+    if (!turnstileToken) nextErrors.turnstile = "Please complete the CAPTCHA.";
 
     return nextErrors;
   };
@@ -44,22 +53,55 @@ export default function ContactForm() {
         [name]: "",
       }));
     }
+
+    if (apiError) {
+      setApiError("");
+    }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
+console.log("Submit clicked");
+  console.log("turnstileToken:", turnstileToken);
+  console.log("formData:", formData);
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setSuccessMessage("");
+      setApiError("");
       return;
     }
 
-    console.log("Contact form submitted:", formData);
-    setFormData(initialForm);
+    setIsSubmitting(true);
     setErrors({});
-    setSuccessMessage("Thank you. Your message has been noted for follow-up.");
+    setApiError("");
+    setSuccessMessage("");
+
+    try {
+      await submitContactEnquiry({
+        enquiry_type: "contact",
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+        turnstile_token: turnstileToken,
+      });
+
+      setFormData(initialForm);
+      setTurnstileToken("");
+      setCaptchaKey((current) => current + 1);
+      setSuccessMessage("Thank you for your enquiry. Our team will contact you shortly.");
+    } catch (error) {
+      if (error instanceof ContactEnquiryError) {
+        setErrors(error.errors || {});
+        setApiError(error.message);
+      } else {
+        setApiError("Unable to submit enquiry. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -76,6 +118,12 @@ export default function ContactForm() {
         </div>
       ) : null}
 
+      {apiError ? (
+        <div className="alert alert-danger" role="alert">
+          {apiError}
+        </div>
+      ) : null}
+
       <form onSubmit={handleSubmit} noValidate>
         <div className="row">
           <div className="col-lg-6 col-md-6 col-sm-12">
@@ -89,7 +137,9 @@ export default function ContactForm() {
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.name)}
               />
-              {errors.name ? <span className="contact-field-error">{errors.name}</span> : null}
+              {errors.name ? (
+                <span className="contact-field-error">{getErrorText(errors.name)}</span>
+              ) : null}
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
@@ -103,7 +153,9 @@ export default function ContactForm() {
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.email)}
               />
-              {errors.email ? <span className="contact-field-error">{errors.email}</span> : null}
+              {errors.email ? (
+                <span className="contact-field-error">{getErrorText(errors.email)}</span>
+              ) : null}
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
@@ -117,7 +169,9 @@ export default function ContactForm() {
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.phone)}
               />
-              {errors.phone ? <span className="contact-field-error">{errors.phone}</span> : null}
+              {errors.phone ? (
+                <span className="contact-field-error">{getErrorText(errors.phone)}</span>
+              ) : null}
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12">
@@ -132,7 +186,7 @@ export default function ContactForm() {
                 aria-invalid={Boolean(errors.subject)}
               />
               {errors.subject ? (
-                <span className="contact-field-error">{errors.subject}</span>
+                <span className="contact-field-error">{getErrorText(errors.subject)}</span>
               ) : null}
             </div>
           </div>
@@ -147,14 +201,39 @@ export default function ContactForm() {
                 aria-invalid={Boolean(errors.message)}
               />
               {errors.message ? (
-                <span className="contact-field-error">{errors.message}</span>
+                <span className="contact-field-error">{getErrorText(errors.message)}</span>
               ) : null}
             </div>
           </div>
         </div>
+        <TurnstileCaptcha
+          key={captchaKey}
+          onSuccess={(token) => {
+            setTurnstileToken(token);
+            setErrors((current) => ({
+              ...current,
+              turnstile: "",
+            }));
+          }}
+          onExpire={() => {
+            setTurnstileToken("");
+          }}
+          onError={() => {
+            setTurnstileToken("");
+            setErrors((current) => ({
+              ...current,
+              turnstile: "CAPTCHA verification failed. Please try again.",
+            }));
+          }}
+        />
+        {errors.turnstile ? (
+          <span className="contact-field-error d-block mb-2">
+            {getErrorText(errors.turnstile)}
+          </span>
+        ) : null}
         <div className="comment-btn text-right mt-3">
-          <button type="submit" className="nir-btn">
-            Send Message
+          <button type="submit" className="nir-btn" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
         </div>
       </form>
