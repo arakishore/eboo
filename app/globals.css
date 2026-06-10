@@ -158,6 +158,7 @@ h6 span {
 
 .partners-logo-section {
   background: #fff;
+  z-index: 0;
 }
 
 .partners-logo-viewport {

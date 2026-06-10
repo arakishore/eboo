@@ -6808,6 +6808,7 @@ footer {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  z-index: 0;
 }
 footer .overlay {
   opacity: 0.8;
