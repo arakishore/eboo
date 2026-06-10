@@ -17,12 +17,13 @@ const hotelFeatures = [
 ];
 
 const hotelGallery = [
-  "/images/rooms/grid1.jpg",
-  "/images/rooms/grid2.jpg",
-  "/images/rooms/grid3.jpg",
-  "/images/rooms/grid4.jpg",
-  "/images/rooms/grid5.jpg",
-  "/images/rooms/list4.jpg",
+  "/images/dummy-eboo.png",
+  "/images/dummy-eboo.png",
+  "/images/dummy-eboo.png",
+  "/images/dummy-eboo.png",
+  "/images/dummy-eboo.png",
+  "/images/dummy-eboo.png",
+  "/images/dummy-eboo.png",
 ];
 
 function getHomeBanners(banners) {
