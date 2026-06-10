@@ -2,7 +2,9 @@ import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import PartnersLogoSlider from "@/components/PartnersLogoSlider";
 import { siteConfig } from "@/config/site";
+import { getApiCollection } from "@/lib/api";
 
 export const metadata = {
   title: siteConfig.seo.defaultTitle,
@@ -10,17 +12,14 @@ export const metadata = {
   keywords: siteConfig.seo.defaultKeywords,
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const partners = await getApiCollection("partners", []);
+
   return (
     <html lang="en">
       <head>
         <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap"
-          rel="stylesheet"
-        />
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="/css/style.css" rel="stylesheet" type="text/css" />
         <link href="/css/plugin.css" rel="stylesheet" type="text/css" />
@@ -38,11 +37,10 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/fonts/line-icons.css" type="text/css" />
       </head>
       <body suppressHydrationWarning={true}>
-        <div id="preloader">
-          <div id="status"></div>
-        </div>
+        
         <Header />
         {children}
+        <PartnersLogoSlider logos={partners} />
         <Footer />
         <div id="back-to-top">
           <a href="#"></a>

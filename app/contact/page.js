@@ -66,27 +66,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="contact-info">
-            <div className="row">
-              {contactCards.map((card) => (
-                <div className="col-lg-3 col-md-6 col-sm-12" key={card.title}>
-                  <div className="info-item eboo-contact-card bg-white mb-4">
-                    <div className="info-icon">
-                      <i className={card.icon} aria-hidden="true"></i>
-                    </div>
-                    <div className="info-content">
-                      <h4>{card.title}</h4>
-                      {card.lines.map((line) => (
-                        <p className="m-0" key={line}>
-                          {line}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          
 
           <div className="row align-items-stretch mt-4">
             <div className="col-lg-5 col-md-12 mb-4">
@@ -118,6 +98,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      
     </>
   );
 }

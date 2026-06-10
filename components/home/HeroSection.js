@@ -54,7 +54,7 @@ export default function HeroSection({ banners = [] }) {
                   style={{ backgroundImage: `url(${slide.image})` }}
                 ></div>
                 <div className={slide.contentClass}>
-                  {slide.title ? <h1 className="white mb-2">{slide.title}</h1> : null}
+                  {slide.title ? <h1 className="hero-title white mb-2">{slide.title}</h1> : null}
                   {slide.description ? <p className="white mb-4">{slide.description}</p> : null}
                   {slide.link && slide.buttonText ? (
                     <Link href={slide.link} className="per-btn">

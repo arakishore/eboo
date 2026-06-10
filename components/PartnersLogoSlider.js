@@ -26,19 +26,29 @@ function LogoItems({ logos, hidden = false }) {
   ));
 }
 
+function fillLogoSet(logos, minimumItems = 12) {
+  if (logos.length >= minimumItems) {
+    return logos;
+  }
+
+  return Array.from({ length: minimumItems }, (_, index) => logos[index % logos.length]);
+}
+
 export default function PartnersLogoSlider({ logos = [] }) {
   if (!logos.length) {
     return null;
   }
 
-  const items = logos
+  const normalizedItems = logos
     .slice(0, 12)
     .map((logo, index) => normalizeLogo(logo, index))
     .filter((logo) => logo.src);
 
-  if (!items.length) {
+  if (!normalizedItems.length) {
     return null;
   }
+
+  const items = fillLogoSet(normalizedItems);
 
   return (
     <section className="partners bordernone pt-5 pb-5 partners-logo-section">

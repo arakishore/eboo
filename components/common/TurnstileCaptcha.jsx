@@ -1,12 +1,24 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function TurnstileCaptcha({ onSuccess, onExpire, onError }) {
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const shouldBypassTurnstile = process.env.NODE_ENV === "development";
+  const didBypassRef = useRef(false);
 
-  console.log("Site key loaded:", siteKey); // ← add this
-  console.log("Site key length:", siteKey?.length); // ← add this
+  useEffect(() => {
+    if (shouldBypassTurnstile && !didBypassRef.current) {
+      didBypassRef.current = true;
+      onSuccess?.("development-turnstile-bypass");
+    }
+  }, [onSuccess, shouldBypassTurnstile]);
+
+  if (shouldBypassTurnstile) {
+    return null;
+  }
+
   if (!siteKey) {
     console.error("Turnstile site key is not defined");
     return null;

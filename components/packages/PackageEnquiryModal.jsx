@@ -57,9 +57,8 @@ export default function PackageEnquiryModal({ packageItem }) {
       nextErrors.package_id = "Package information is missing.";
     }
     if (!formData.name.trim()) nextErrors.name = "Please enter your name.";
-    if (!emailPattern.test(formData.email.trim())) {
-      nextErrors.email = "Please enter a valid email address.";
-    }
+     if (!formData.phone.trim()) nextErrors.phone = "Please enter your phone number.";
+    if (!formData.travel_date.trim()) nextErrors.travel_date = "Please enter your travel date.";
     if (!formData.message.trim()) nextErrors.message = "Please enter your message.";
     if (!turnstileToken) nextErrors.turnstile = "Please complete the CAPTCHA.";
 
@@ -126,7 +125,7 @@ export default function PackageEnquiryModal({ packageItem }) {
         setErrors(error.errors || {});
         setApiError(error.message);
       } else {
-        setApiError("Unable to submit enquiry. Please try again.");
+        setApiError("Unable to submit package enquiry. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -204,7 +203,7 @@ export default function PackageEnquiryModal({ packageItem }) {
                       type="email"
                       name="email"
                       className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                      placeholder="Email *"
+                      placeholder="Email"
                       value={formData.email}
                       onChange={handleChange}
                       aria-invalid={Boolean(errors.email)}
@@ -221,7 +220,7 @@ export default function PackageEnquiryModal({ packageItem }) {
                       type="tel"
                       name="phone"
                       className={`form-control ${errors.phone ? "is-invalid" : ""}`}
-                      placeholder="Phone"
+                      placeholder="Phone *"
                       value={formData.phone}
                       onChange={handleChange}
                       aria-invalid={Boolean(errors.phone)}

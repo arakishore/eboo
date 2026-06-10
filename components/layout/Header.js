@@ -9,13 +9,26 @@ const menuItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/destinations", label: "Destinations" },
-  { href: "/packages", label: "Packages" },
+  {
+    href: "/hotels",
+    label: "Services",
+    children: [
+      { href: "/hotels", label: "Hotels" },
+      { href: "/flights", label: "Flights" },
+      { href: "/cars", label: "Cars" },
+      { href: "/cruises", label: "Cruise" },
+      { href: "/visa", label: "Visa" },
+      { href: "/forex", label: "Forex" },
+    ],
+  },
+//   { href: "/packages", label: "Packages" },
   { href: "/contact", label: "Contact Us" },
 ];
 
 export default function Header() {
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
 
@@ -39,6 +52,8 @@ export default function Header() {
     }, []);
 
     const isActive = (href) => (href === "/" ? pathname === href : pathname?.startsWith(href));
+    const isMenuItemActive = (item) =>
+        isActive(item.href) || item.children?.some((child) => isActive(child.href));
 
     return (
         <header className="main_header_area">
@@ -76,8 +91,33 @@ export default function Header() {
                             <div className="navbar-collapse1 d-flex align-items-center" id="bs-example-navbar-collapse-1">
                                 <ul className="nav navbar-nav" id="responsive-menu">
                                     {menuItems.map((item) => (
-                                        <li className={isActive(item.href) ? "active" : ""} key={item.href}>
-                                            <Link href={item.href}>{item.label}</Link>
+                                        <li
+                                            className={`${isMenuItemActive(item) ? "active" : ""}${item.children ? " submenu dropdown" : ""}`}
+                                            key={item.href}
+                                        >
+                                            {item.children ? (
+                                                <>
+                                                    <Link
+                                                        href={item.href}
+                                                        className="dropdown-toggle"
+                                                        role="button"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="false"
+                                                    >
+                                                        {item.label}{" "}
+                                                        <i className="icon-arrow-down" aria-hidden="true"></i>
+                                                    </Link>
+                                                    <ul className="dropdown-menu">
+                                                        {item.children.map((child) => (
+                                                            <li key={child.href}>
+                                                                <Link href={child.href}>{child.label}</Link>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </>
+                                            ) : (
+                                                <Link href={item.href}>{item.label}</Link>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
@@ -96,13 +136,49 @@ export default function Header() {
                                     </button>
                                     <ul className="slicknav_nav" style={{ display: isMobileMenuOpen ? "block" : "none" }}>
                                         {menuItems.map((item) => (
-                                            <li className={isActive(item.href) ? "active" : ""} key={item.href}>
-                                                <Link
-                                                    href={item.href}
-                                                    onClick={() => setIsMobileMenuOpen(false)}
-                                                >
-                                                    {item.label}
-                                                </Link>
+                                            <li
+                                                className={`${isMenuItemActive(item) ? "active" : ""}${item.children ? " slicknav_parent" : ""}`}
+                                                key={item.href}
+                                            >
+                                                {item.children ? (
+                                                    <>
+                                                        <button
+                                                            type="button"
+                                                            className="slicknav_item eboo-mobile-submenu-toggle"
+                                                            aria-expanded={isMobileServicesOpen}
+                                                            onClick={() =>
+                                                                setIsMobileServicesOpen((isOpen) => !isOpen)
+                                                            }
+                                                        >
+                                                            <span>{item.label}</span>
+                                                            <span className="slicknav_arrow">
+                                                                {isMobileServicesOpen ? "-" : "+"}
+                                                            </span>
+                                                        </button>
+                                                        <ul style={{ display: isMobileServicesOpen ? "block" : "none" }}>
+                                                            {item.children.map((child) => (
+                                                                <li
+                                                                    className={isActive(child.href) ? "active" : ""}
+                                                                    key={child.href}
+                                                                >
+                                                                    <Link
+                                                                        href={child.href}
+                                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                                    >
+                                                                        {child.label}
+                                                                    </Link>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </>
+                                                ) : (
+                                                    <Link
+                                                        href={item.href}
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                    >
+                                                        {item.label}
+                                                    </Link>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>

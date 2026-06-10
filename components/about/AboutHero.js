@@ -132,19 +132,7 @@ export default function AboutHero() {
           </div>
         </div>
 
-        {/* text layer on top */}
-        <div ref={contentRef} className={styles.content}>
-          
-           <div className="row justify-content-center">
-            <div className="col-lg-12 col-xl-12">
-              <div className="about-hero-content text-center fade-up" ref={contentRef}>
-                <span className="about-eyebrow">Eboo Travel</span>
-                <h1>Creating unforgettable journeys around the world</h1>
-               
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
       </div>
     </div>

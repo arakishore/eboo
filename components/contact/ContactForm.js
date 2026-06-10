@@ -16,12 +16,31 @@ function getErrorText(error) {
   return Array.isArray(error) ? error[0] : error;
 }
 
+function normalizeSubmitErrors(errors = {}) {
+  return {
+    ...errors,
+    turnstile: errors.turnstile || errors.turnstile_token,
+  };
+}
+
+function getTrackingFields() {
+  if (typeof window === "undefined") {
+    return {};
+  }
+
+  return {
+    page_url: window.location.href,
+    referrer_url: document.referrer || "",
+  };
+}
+
 export default function ContactForm() {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [submitNotice, setSubmitNotice] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [captchaKey, setCaptchaKey] = useState(0);
 
@@ -30,9 +49,11 @@ export default function ContactForm() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!formData.name.trim()) nextErrors.name = "Please enter your name.";
-    if (!emailPattern.test(formData.email.trim())) {
+    if (formData.email.trim() && !emailPattern.test(formData.email.trim())) {
       nextErrors.email = "Please enter a valid email address.";
     }
+    if (!formData.phone.trim()) nextErrors.phone = "Please enter your phone number.";
+    if (!formData.subject.trim()) nextErrors.subject = "Please enter a subject.";
     if (!formData.message.trim()) nextErrors.message = "Please enter your message.";
     if (!turnstileToken) nextErrors.turnstile = "Please complete the CAPTCHA.";
 
@@ -57,18 +78,21 @@ export default function ContactForm() {
     if (apiError) {
       setApiError("");
     }
+
+    if (submitNotice) {
+      setSubmitNotice("");
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-console.log("Submit clicked");
-  console.log("turnstileToken:", turnstileToken);
-  console.log("formData:", formData);
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setSuccessMessage("");
       setApiError("");
+      setSubmitNotice("");
       return;
     }
 
@@ -76,6 +100,7 @@ console.log("Submit clicked");
     setErrors({});
     setApiError("");
     setSuccessMessage("");
+    setSubmitNotice("Submitting your message...");
 
     try {
       await submitContactEnquiry({
@@ -86,18 +111,21 @@ console.log("Submit clicked");
         subject: formData.subject.trim(),
         message: formData.message.trim(),
         turnstile_token: turnstileToken,
+        ...getTrackingFields(),
       });
 
       setFormData(initialForm);
       setTurnstileToken("");
       setCaptchaKey((current) => current + 1);
+      setSubmitNotice("");
       setSuccessMessage("Thank you for your enquiry. Our team will contact you shortly.");
     } catch (error) {
+      setSubmitNotice("");
       if (error instanceof ContactEnquiryError) {
-        setErrors(error.errors || {});
+        setErrors(normalizeSubmitErrors(error.errors));
         setApiError(error.message);
       } else {
-        setApiError("Unable to submit enquiry. Please try again.");
+        setApiError("Unable to submit Contact Form. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -124,6 +152,12 @@ console.log("Submit clicked");
         </div>
       ) : null}
 
+      {submitNotice ? (
+        <div className="alert alert-info" role="status">
+          {submitNotice}
+        </div>
+      ) : null}
+
       <form onSubmit={handleSubmit} noValidate>
         <div className="row">
           <div className="col-lg-6 col-md-6 col-sm-12">
@@ -132,7 +166,7 @@ console.log("Submit clicked");
                 type="text"
                 name="name"
                 className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                placeholder="Name"
+                placeholder="Name *"
                 value={formData.name}
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.name)}
@@ -164,7 +198,7 @@ console.log("Submit clicked");
                 type="tel"
                 name="phone"
                 className={`form-control ${errors.phone ? "is-invalid" : ""}`}
-                placeholder="Phone"
+                placeholder="Phone *"
                 value={formData.phone}
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.phone)}
@@ -180,7 +214,7 @@ console.log("Submit clicked");
                 type="text"
                 name="subject"
                 className={`form-control ${errors.subject ? "is-invalid" : ""}`}
-                placeholder="Subject"
+                placeholder="Subject *"
                 value={formData.subject}
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.subject)}
@@ -195,7 +229,7 @@ console.log("Submit clicked");
               <textarea
                 name="message"
                 className={errors.message ? "is-invalid" : ""}
-                placeholder="Message"
+                placeholder="Message *"
                 value={formData.message}
                 onChange={handleChange}
                 aria-invalid={Boolean(errors.message)}
