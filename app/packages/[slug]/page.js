@@ -1,8 +1,10 @@
 import PageBanner from "@/components/common/PageBanner";
 import { notFound } from "next/navigation";
+import PackageActionTabs from "@/components/packages/PackageActionTabs";
 import PackageEnquiryModal from "@/components/packages/PackageEnquiryModal";
 import PackageGallery from "@/components/packages/PackageGallery";
 import PackageItineraryAccordion from "@/components/packages/PackageItineraryAccordion";
+import { siteConfig } from "@/config/site";
 import {
   normalizePackage,
   packages as fallbackPackages,
@@ -51,37 +53,20 @@ export default async function PackageDetailPage({ params }) {
   }
 
   const destinationName = packageItem.destination?.name || "";
+  const whatsappNumber = siteConfig.contact.whatsapp.replace(/\D/g, "");
+  const whatsappMessage = encodeURIComponent(
+    `Hello, I want to enquire about this package: ${packageItem.title}`
+  );
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
     <>
-       <PageBanner title={packageItem.title} breadcrumbLabel="Package Detail" /> 
-
-      <div className="tabs-navbar1 bg-white sticky1 p-4">
-        <div className="row">
-          <div className="col-md-12">
-            <ul id="tabs" className="nav nav-tabs bordernone">
-              <li className="active">
-                <a data-toggle="tab" href="#description">
-                  Highlight
-                </a>
-              </li>
-              <li>
-                <a data-toggle="tab" href="#itinerary">
-                  Itinerary
-                </a>
-              </li>
-              <li>
-                <a href="#" data-toggle="modal" data-target="#packageEnquiryModal">
-                  Ask About This Package
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
+      <PageBanner title={packageItem.title} breadcrumbLabel="Package Detail" />
       <section className="blog trending destination-b">
         <div className="container">
+          <div className="row">
+            <div className="col-lg-12 mb-5"><PackageActionTabs whatsappUrl={whatsappUrl} /></div>
+          </div>
           <div className="row">
             <div className="col-lg-12">
               <div className="single-content">
@@ -215,7 +200,14 @@ export default async function PackageDetailPage({ params }) {
                 >
                   <PackageItineraryAccordion itineraries={packageItem.itineraries} />
                 </div>
-
+                <div className="single-map mb-4 active show" id="single-map" role="tabpanel">
+                  <h4>Map</h4>
+                  <div className="map">
+                    <div >
+                      Map here
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

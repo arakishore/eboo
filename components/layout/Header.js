@@ -27,8 +27,13 @@ const menuItems = [
 
 export default function Header() {
     const pathname = usePathname();
+    const isServicesPath = menuItems.some((item) =>
+        item.children?.some((child) =>
+            child.href === "/" ? pathname === child.href : pathname?.startsWith(child.href)
+        )
+    );
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+    const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(isServicesPath);
     const [isSticky, setIsSticky] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
 
@@ -123,7 +128,10 @@ export default function Header() {
                                 </ul>
 
                             </div>
-                            <div id="slicknav-mobile">
+                            <div
+                                id="slicknav-mobile"
+                                className={isMobileMenuOpen ? "eboo-mobile-menu-open" : ""}
+                            >
                                 <div className="slicknav_menu">
                                     <button
                                         type="button"
@@ -134,36 +142,52 @@ export default function Header() {
                                     >
                                         <span className="slicknav_menutxt"></span>
                                     </button>
-                                    <ul className="slicknav_nav" style={{ display: isMobileMenuOpen ? "block" : "none" }}>
+                                    <ul
+                                        className="slicknav_nav eboo-mobile-nav"
+                                        role="menu"
+                                        aria-hidden={!isMobileMenuOpen}
+                                        style={{ display: isMobileMenuOpen ? "block" : "none" }}
+                                    >
                                         {menuItems.map((item) => (
                                             <li
-                                                className={`${isMenuItemActive(item) ? "active" : ""}${item.children ? " slicknav_parent" : ""}`}
+                                                className={`${isMenuItemActive(item) ? "active" : ""}${item.children ? ` slicknav_parent ${isMobileServicesOpen ? "slicknav_open" : "slicknav_collapsed"}` : ""}`}
                                                 key={item.href}
+                                                role="none"
                                             >
                                                 {item.children ? (
                                                     <>
                                                         <button
                                                             type="button"
-                                                            className="slicknav_item eboo-mobile-submenu-toggle"
+                                                            className="slicknav_item slicknav_row eboo-mobile-submenu-toggle"
                                                             aria-expanded={isMobileServicesOpen}
                                                             onClick={() =>
                                                                 setIsMobileServicesOpen((isOpen) => !isOpen)
                                                             }
                                                         >
-                                                            <span>{item.label}</span>
+                                                            <span className="eboo-mobile-menu-label">{item.label}</span>
                                                             <span className="slicknav_arrow">
-                                                                {isMobileServicesOpen ? "-" : "+"}
+                                                                <i
+                                                                    className={`fa ${isMobileServicesOpen ? "fa-minus" : "fa-plus"}`}
+                                                                    aria-hidden="true"
+                                                                ></i>
                                                             </span>
                                                         </button>
-                                                        <ul style={{ display: isMobileServicesOpen ? "block" : "none" }}>
+                                                        <ul
+                                                            className={`dropdown-menu${isMobileServicesOpen ? "" : " slicknav_hidden"}`}
+                                                            role="menu"
+                                                            aria-hidden={!isMobileServicesOpen}
+                                                            style={{ display: isMobileServicesOpen ? "block" : "none" }}
+                                                        >
                                                             {item.children.map((child) => (
                                                                 <li
                                                                     className={isActive(child.href) ? "active" : ""}
                                                                     key={child.href}
+                                                                    role="none"
                                                                 >
                                                                     <Link
                                                                         href={child.href}
                                                                         onClick={() => setIsMobileMenuOpen(false)}
+                                                                        role="menuitem"
                                                                     >
                                                                         {child.label}
                                                                     </Link>
@@ -175,6 +199,7 @@ export default function Header() {
                                                     <Link
                                                         href={item.href}
                                                         onClick={() => setIsMobileMenuOpen(false)}
+                                                        role="menuitem"
                                                     >
                                                         {item.label}
                                                     </Link>

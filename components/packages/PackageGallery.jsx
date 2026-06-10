@@ -37,6 +37,7 @@ function getGalleryImages(packageItem = {}) {
 }
 
 export default function PackageGallery({ packageItem }) {
+  const [mainSwiper, setMainSwiper] = useState(null);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const images = getGalleryImages(packageItem);
@@ -49,6 +50,11 @@ export default function PackageGallery({ packageItem }) {
   const slides = images.map((image) => ({ src: image }));
   const imageTitle = packageItem?.title || "Package gallery image";
   const openLightbox = (index) => setLightboxIndex(index);
+  const showMainImage = (index) => {
+    if (mainSwiper && !mainSwiper.destroyed) {
+      mainSwiper.slideTo(index);
+    }
+  };
   const resetButtonStyle = {
     background: "transparent",
     border: 0,
@@ -64,6 +70,7 @@ export default function PackageGallery({ packageItem }) {
         <Swiper
           modules={[FreeMode, Navigation, Thumbs]}
           className="slider-store"
+          onSwiper={setMainSwiper}
           slidesPerView={1}
           navigation={false}
           thumbs={{
@@ -115,7 +122,7 @@ export default function PackageGallery({ packageItem }) {
                 <button
                   type="button"
                   aria-label={`View image ${index + 1} of ${images.length}`}
-                  onClick={() => openLightbox(index)}
+                  onClick={() => showMainImage(index)}
                   style={resetButtonStyle}
                 >
                   <Image

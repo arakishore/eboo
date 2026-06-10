@@ -3993,9 +3993,9 @@ span.location-box {
   .trending.destination .trend-box ul.nav.nav-tabs li a {
     padding: 10px 15px;
   }
-  .destination-b .trend-tags, .tabs-navbar1 {
+  /* .destination-b .trend-tags, .tabs-navbar1 {
     display: none;
-  }
+  } */
   .destination-b .booking-box-title {
     text-align: center;
   }
