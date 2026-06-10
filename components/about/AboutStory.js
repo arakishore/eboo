@@ -25,7 +25,7 @@ export default function AboutStory() {
           </div>
           <div className="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
             <ScrollReveal direction="right" className="about-image-frame about-image-frame--offset">
-              <img src="/images/dummy.jpg" alt="Beautiful travel destination" />
+              <img src="/images/dummy-eboo.png" alt="Beautiful travel destination" />
             </ScrollReveal>
           </div>
         </div>

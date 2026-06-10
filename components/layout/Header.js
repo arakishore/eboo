@@ -89,7 +89,7 @@ export default function Header() {
 
                             <div className="navbar-header">
                                 <Link className="navbar-brand" href="/">
-                                    <img src="/images/logo.png" alt="image" />
+                                    <img src="/images/eboo-textlogo.png"  alt="Eboo Logo" />
                                 </Link>
                             </div>
 

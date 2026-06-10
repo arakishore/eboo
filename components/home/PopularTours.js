@@ -16,7 +16,7 @@ function TourTile({ item, hrefBase = "/destinations" }) {
   return (
     <div className="col-lg p-0">
       <div className="desti-image bordernone">
-        <img src={item.image || "/images/dummy.jpg"} alt={item.title || "Tour"} />
+        <img src={item.image || "/images/dummy-eboo.png"} alt={item.title || "Tour"} />
         <div className="desti-content">
           <div className="rating mb-1">
             <span className="fa fa-star checked"></span>

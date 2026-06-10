@@ -11,7 +11,7 @@ export default function Footer() {
 
                         {/* Col 1 — Brand */}
                         <div className="footer-brand">
-                            <img src="/images/logo.png" alt="eboo logo" />
+                            <img src="/images/eboo-logo-new.png" alt="eboo logo" style={{ height: 100 }} />
                             <p>Explore handpicked tour packages, holiday destinations, family vacations, honeymoon trips, and customized travel experiences.</p>
                             <div className="social-links">
                                 <ul>

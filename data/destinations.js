@@ -1,6 +1,6 @@
 import { firstValue, normalizeSlug, toApiImageUrl } from "@/lib/api";
 
-export const destinationImageFallback = "/images/dummy.jpg";
+export const destinationImageFallback = "/images/dummy-eboo.png";
 
 export const fallbackDestinations = [
   {
