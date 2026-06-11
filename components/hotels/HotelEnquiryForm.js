@@ -463,6 +463,7 @@ export default function HotelEnquiryForm() {
 
         <div className="service-form-grid">
           <div>
+            <span className="service-date-label">Check In Date *</span>
             <label className="service-field">
               <i className="fa fa-calendar" aria-hidden="true"></i>
               <input
@@ -479,6 +480,7 @@ export default function HotelEnquiryForm() {
             ) : null}
           </div>
           <div>
+            <span className="service-date-label">Check Out Date *</span>
             <label className="service-field">
               <i className="fa fa-calendar" aria-hidden="true"></i>
               <input

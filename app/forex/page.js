@@ -5,7 +5,7 @@ export const metadata = {
 
 import ForexEnquiryForm from "@/components/forex/ForexEnquiryForm";
 import HeroSection from "@/components/home/HeroSection";
-import { getApiCollection } from "@/lib/api";
+import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
 
 const forexFeatures = [
   "Best Exchange Rates",
@@ -15,16 +15,6 @@ const forexFeatures = [
   "Safe & Secure Transactions",
   "24/7 Customer Assistance",
 ];
-const forexGallery = [
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-];
-
 function getHomeBanners(banners) {
   const homeBanners = banners.filter(
     (banner) => String(banner?.page || "").trim().toLowerCase() === "forex"
@@ -33,8 +23,23 @@ function getHomeBanners(banners) {
   return homeBanners.length ? homeBanners : banners;
 }
 
+async function getServiceGallery(galleryType) {
+  const response = await apiGet(`gallery?gallery_type=${galleryType}`, {
+    fallback: { images: [] },
+  });
+  const images = Array.isArray(response.data?.images) ? response.data.images : [];
+
+  return images
+    .map((image) => ({
+      id: image.id,
+      src: toApiImageUrl(image.image),
+    }))
+    .filter((image) => image.src);
+}
+
 export default async function ForexPage() {
   const banners = await getApiCollection("banners", []);
+  const forexGallery = await getServiceGallery("forex");
   const homeBanners = getHomeBanners(banners);
 
   return (
@@ -46,15 +51,12 @@ export default async function ForexPage() {
           <div className="row align-items-stretch">
             <div className="col-lg-6 mb-4 mb-lg-0">
               <div className="service-info-box h-100">
-                <h2 className="navy">We&apos;re Truely Dedicated To Make Your Travel Experience</h2>
+               <h2 className="navy">Reliable Foreign Currency Exchange Services</h2>
                 <p>
-                  Top Tour Operators and Travel Agency. We offering in total 793 tours and holidays
-                  throughout the world. Combined we have received 1532 customer reviews and an
-                  average rating of 5 out of 5 stars.
+                  Planning an international trip? We make foreign currency exchange simple, secure, and hassle-free. Whether you&apos;re travelling for a holiday, business trip, education, or medical purposes, we help you get the currency you need at competitive rates.
                 </p>
                 <p>
-                  Travel has helped us to understand the meaning of life and it has helped us become
-                  better people. Each time we travel, we see the world with new eyes.
+                  Our team provides quick assistance, transparent pricing, and guidance throughout the exchange process, ensuring you&apos;re travel-ready with confidence.
                 </p>
                 <ul className="service-feature-list">
                   {forexFeatures.map((feature) => (
@@ -77,15 +79,19 @@ export default async function ForexPage() {
               Forex <span>Gallery</span>
             </h2>
           </div>
-          <div className="row">
-            {forexGallery.map((image, index) => (
-              <div className="col-lg-4 col-md-6 mb-4" key={`image${index}`}>
-                <div className="service-gallery-item">
-                  <img src={image} alt={`Forex gallery ${index + 1}`} />
+          {forexGallery.length ? (
+            <div className="row">
+              {forexGallery.map((image, index) => (
+                <div className="col-lg-4 col-md-6 mb-4" key={image.id || image.src}>
+                  <div className="service-gallery-item">
+                    <img src={image.src} alt={`Forex gallery ${index + 1}`} />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center mb-0">No forex gallery images found.</p>
+          )}
         </div>
       </section>
     </>

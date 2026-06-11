@@ -5,7 +5,7 @@ export const metadata = {
 
 import HeroSection from "@/components/home/HeroSection";
 import HotelEnquiryForm from "@/components/hotels/HotelEnquiryForm";
-import { getApiCollection } from "@/lib/api";
+import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
 
 const hotelFeatures = [
   "Safety Hotel System",
@@ -16,16 +16,6 @@ const hotelFeatures = [
   "24/7 Customer Support",
 ];
 
-const hotelGallery = [
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-  "/images/dummy-eboo.png",
-];
-
 function getHomeBanners(banners) {
   const homeBanners = banners.filter(
     (banner) => String(banner?.page || "").trim().toLowerCase() === "hotel"
@@ -34,8 +24,23 @@ function getHomeBanners(banners) {
   return homeBanners.length ? homeBanners : banners;
 }
 
+async function getServiceGallery(galleryType) {
+  const response = await apiGet(`gallery?gallery_type=${galleryType}`, {
+    fallback: { images: [] },
+  });
+  const images = Array.isArray(response.data?.images) ? response.data.images : [];
+
+  return images
+    .map((image) => ({
+      id: image.id,
+      src: toApiImageUrl(image.image),
+    }))
+    .filter((image) => image.src);
+}
+
 export default async function HotelsPage() {
   const banners = await getApiCollection("banners", []);
+  const hotelGallery = await getServiceGallery("hotel");
   const homeBanners = getHomeBanners(banners);
 
   return (
@@ -78,15 +83,19 @@ export default async function HotelsPage() {
               Hotels <span>Gallery</span>
             </h2>
           </div>
-          <div className="row">
-            {hotelGallery.map((image, index) => (
-              <div className="col-lg-4 col-md-6 mb-4" key={image}>
-                <div className="service-gallery-item">
-                  <img src={image} alt={`Hotel gallery ${index + 1}`} />
+          {hotelGallery.length ? (
+            <div className="row">
+              {hotelGallery.map((image, index) => (
+                <div className="col-lg-4 col-md-6 mb-4" key={image.id || image.src}>
+                  <div className="service-gallery-item">
+                    <img src={image.src} alt={`Hotel gallery ${index + 1}`} />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center mb-0">No hotel gallery images found.</p>
+          )}
         </div>
       </section>
     </>

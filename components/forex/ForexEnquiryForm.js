@@ -194,52 +194,60 @@ export default function ForexEnquiryForm() {
       ) : null}
 
       <form className="service-enquiry-form" onSubmit={handleSubmit} noValidate>
-        <label className="service-field">
-          <i className="fa fa-credit-card" aria-hidden="true"></i>
-          <select
-            name="currency_type"
-            value={formData.currency_type}
-            onChange={handleChange}
-            aria-invalid={Boolean(errors.currency_type)}
-          >
-            <option value="">Type: Currency / Card *</option>
-            <option value="Currency">Currency</option>
-            <option value="Card">Card</option>
-          </select>
-        </label>
-        {errors.currency_type ? (
-          <span className="contact-field-error">{getErrorText(errors.currency_type)}</span>
-        ) : null}
+        <div className="forex-form-field">
+          <label className="service-field">
+            <i className="fa fa-credit-card" aria-hidden="true"></i>
+            <select
+              name="currency_type"
+              value={formData.currency_type}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.currency_type)}
+            >
+              <option value="">Type: Currency / Card *</option>
+              <option value="Currency">Currency</option>
+              <option value="Card">Card</option>
+            </select>
+          </label>
+          {errors.currency_type ? (
+            <span className="contact-field-error">{getErrorText(errors.currency_type)}</span>
+          ) : null}
+        </div>
 
-        <label className="service-field">
-          <i className="fa fa-money" aria-hidden="true"></i>
-          <input
-            type="text"
-            name="currency_amount"
-            placeholder="Value *"
-            inputMode="decimal"
-            value={formData.currency_amount}
-            onChange={handleChange}
-            aria-invalid={Boolean(errors.currency_amount)}
-          />
-        </label>
-        {errors.currency_amount ? (
-          <span className="contact-field-error">{getErrorText(errors.currency_amount)}</span>
-        ) : null}
+        <div className="forex-form-field">
+          <label className="service-field">
+            <i className="fa fa-money" aria-hidden="true"></i>
+            <input
+              type="text"
+              name="currency_amount"
+              placeholder="Value *"
+              inputMode="decimal"
+              value={formData.currency_amount}
+              onChange={handleChange}
+              aria-invalid={Boolean(errors.currency_amount)}
+            />
+          </label>
+          {errors.currency_amount ? (
+            <span className="contact-field-error">{getErrorText(errors.currency_amount)}</span>
+          ) : null}
+        </div>
 
-        <label className="service-field">
-          <i className="fa fa-calendar" aria-hidden="true"></i>
-          <input
-            type="date"
-            name="travel_date"
-            value={formData.travel_date}
-            onChange={handleChange}
-            aria-invalid={Boolean(errors.travel_date)}
-          />
-        </label>
-        {errors.travel_date ? (
-          <span className="contact-field-error">{getErrorText(errors.travel_date)}</span>
-        ) : null}
+        <div className="forex-form-field">
+          <label className="service-field forex-travel-date-field">
+            <i className="fa fa-calendar" aria-hidden="true"></i>
+            <input
+              type="date"
+              name="travel_date"
+              value={formData.travel_date}
+              onChange={handleChange}
+              min={new Date().toISOString().split("T")[0]}
+              aria-invalid={Boolean(errors.travel_date)}
+            />
+            <span className="forex-travel-date-label">Travel Date</span>
+          </label>
+          {errors.travel_date ? (
+            <span className="contact-field-error">{getErrorText(errors.travel_date)}</span>
+          ) : null}
+        </div>
 
         <div className="service-form-grid">
           <div>

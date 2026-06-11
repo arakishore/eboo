@@ -466,6 +466,37 @@ h6 span {
   gap: 14px;
 }
 
+.forex-form-field {
+  display: block;
+}
+
+.forex-form-field .contact-field-error,
+.service-form-grid .contact-field-error {
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+.forex-travel-date-field input {
+  min-width: 0;
+}
+
+.forex-travel-date-label {
+  flex: 0 0 116px;
+  padding-right: 12px;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.service-date-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #17233e;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
 .hotel-autocomplete {
   position: relative;
 }
