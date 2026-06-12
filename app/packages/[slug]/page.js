@@ -12,11 +12,7 @@ import {
 } from "@/data/packages";
 import { getApiItem } from "@/lib/api";
 
-export function generateStaticParams() {
-  return fallbackPackages.map((packageItem) => ({
-    slug: packageItem.slug,
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -107,16 +103,16 @@ export default async function PackageDetailPage({ params }) {
                               Number(packageItem.sale_price) < Number(packageItem.starting_price) ? (
                               <>
                                 <span className="text-muted mr-2">
-                                  <del>₹{Number(packageItem.starting_price).toLocaleString("en-IN")}</del>
+                                  <del>{"\u20B9"}{Number(packageItem.starting_price).toLocaleString("en-IN")}</del>
                                 </span>
 
                                 <strong>
-                                  ₹{Number(packageItem.sale_price).toLocaleString("en-IN")}
+                                  {"\u20B9"}{Number(packageItem.sale_price).toLocaleString("en-IN")}
                                 </strong>
                               </>
                             ) : (
                               <strong>
-                                ₹{Number(
+                                {"\u20B9"}{Number(
                                   packageItem.starting_price || packageItem.sale_price
                                 ).toLocaleString("en-IN")}
                               </strong>

@@ -6,11 +6,7 @@ import { fallbackDestinations, normalizeDestination } from "@/data/destinations"
 import { normalizePackages, packages as fallbackPackages } from "@/data/packages";
 import { getApiCollection, getApiItem, normalizeSlug } from "@/lib/api";
 
-export function generateStaticParams() {
-  return fallbackDestinations.map((destination) => ({
-    slug: destination.slug,
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

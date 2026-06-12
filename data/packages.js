@@ -2,6 +2,19 @@ import { firstValue, normalizeSlug, toApiImageUrl } from "@/lib/api";
 export const packageImageFallback = "/images/dummy-eboo.png";
 
 export const packages = [];
+
+function normalizeList(value) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value && typeof value === "object") {
+    return Object.values(value);
+  }
+
+  return [];
+}
+
 export function normalizePackage(packageItem = {}, index = 0) {
   const title = firstValue(
     packageItem,
@@ -30,10 +43,10 @@ export function normalizePackage(packageItem = {}, index = 0) {
       }))
       .filter((category) => category.name)
     : [];
-  const itineraries = packageItem.itineraries || {};
-  const inclusions = packageItem.inclusions || {};
-  const exclusions = packageItem.exclusions || {};
-  const facts = packageItem.facts || {};
+  const itineraries = normalizeList(packageItem.itineraries);
+  const inclusions = normalizeList(packageItem.inclusions);
+  const exclusions = normalizeList(packageItem.exclusions);
+  const facts = normalizeList(packageItem.facts);
   const featuredImage = toApiImageUrl(
     packageItem.featured_image,
     packageImageFallback
