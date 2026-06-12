@@ -1688,3 +1688,22 @@ h6 span {
     transform: rotate(360deg);
   }
 }
+
+.package-heading{
+  position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #17233e;
+    text-transform: uppercase;  
+}
+ .package-heading:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    height: 4px;
+    background: #f56961;
+  }

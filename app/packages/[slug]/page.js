@@ -82,7 +82,7 @@ export default async function PackageDetailPage({ params }) {
                   </div>
 
                   <div className="description-inner mb-2">
-                    <h4>Package  Highlight</h4>
+                    <h4 className="package-heading">Package  Highlight</h4>
                     <p>{packageItem.short_description}</p>
                   </div>
 
@@ -198,7 +198,7 @@ export default async function PackageDetailPage({ params }) {
                   <PackageItineraryAccordion itineraries={packageItem.itineraries} />
                 </div>
                 <div className="single-map mb-4 active show" id="single-map" role="tabpanel">
-                  <h4>Map</h4>
+                  <h4 className="package-heading">Map</h4>
                   <div className="map text-center">
                     <div >
                       <Image

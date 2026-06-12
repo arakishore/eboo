@@ -69,7 +69,7 @@ export default function PackageItineraryAccordion({ itineraries = [] }) {
 
   return (
     <>
-      <h4>Tour Itinerary</h4>
+      <h4 className="package-heading">Tour Itinerary</h4>
       {items.map((item, index) => (
         <ItineraryItem
           item={item}
