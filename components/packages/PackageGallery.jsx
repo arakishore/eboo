@@ -31,7 +31,7 @@ function getGalleryImages(packageItem = {}) {
     ? galleryImages
     : packageItem.featured_image
       ? [packageItem.featured_image]
-    : [];
+      : [];
 
   return images.map(getImageUrl).filter(Boolean);
 }
@@ -89,11 +89,15 @@ export default function PackageGallery({ packageItem }) {
                   src={image}
                   alt={imageTitle}
                   width={1200}
-                  height={720}
+                  height={500}
                   priority={index === 0}
                   loading={index === 0 ? "eager" : "lazy"}
-                  sizes="(max-width: 768px) 100vw, 1140px"
-                  style={{ height: "auto", width: "100%" }}
+                  sizes="100vw"
+                  style={{
+                    width: "100%",
+                    height: "500px",
+                    objectFit: "cover",
+                  }}
                   unoptimized
                 />
               </button>
@@ -132,7 +136,11 @@ export default function PackageGallery({ packageItem }) {
                     height={140}
                     loading="lazy"
                     sizes="(max-width: 576px) 30vw, 180px"
-                    style={{ height: "auto", width: "100%" }}
+                    style={{
+                      width: "100%",
+                      height: "140px",
+                      objectFit: "cover",
+                    }}
                     unoptimized
                   />
                 </button>

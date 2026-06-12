@@ -1,3 +1,4 @@
+import Image from "next/image";
 import PageBanner from "@/components/common/PageBanner";
 import { notFound } from "next/navigation";
 import PackageActionTabs from "@/components/packages/PackageActionTabs";
@@ -61,7 +62,7 @@ export default async function PackageDetailPage({ params }) {
 
   return (
     <>
-      <PageBanner title={packageItem.title} breadcrumbLabel="Package Detail" />
+      <PageBanner bannerBG={packageItem.featured_image} title={packageItem.title} breadcrumbLabel={destinationName} />
       <section className="blog trending destination-b">
         <div className="container">
           <div className="row">
@@ -202,9 +203,22 @@ export default async function PackageDetailPage({ params }) {
                 </div>
                 <div className="single-map mb-4 active show" id="single-map" role="tabpanel">
                   <h4>Map</h4>
-                  <div className="map">
+                  <div className="map text-center">
                     <div >
-                      Map here
+                      <Image
+                        src={packageItem.banner_image}
+                        alt=""
+                        width={1200}
+                        height={750}
+                        loading="lazy"
+                        sizes="100vw"
+                        style={{
+                          width: "75%",
+                          height: "auto",
+                          objectFit: "cover",
+                        }}
+                        unoptimized
+                      />
                     </div>
                   </div>
                 </div>

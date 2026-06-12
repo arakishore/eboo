@@ -4,13 +4,24 @@ import { useState } from "react";
 import TurnstileCaptcha from "@/components/common/TurnstileCaptcha";
 import { ContactEnquiryError, submitContactEnquiry } from "@/lib/contact-enquiry";
 
+const cruiseTypes = [
+  "Ocean Cruise",
+  "River Cruise",
+  "Luxury Cruise",
+  "Family Cruise",
+  "Honeymoon Cruise",
+  "Adventure Cruise",
+  "Expedition Cruise",
+  "World Cruise",
+];
+
 const initialForm = {
-  currency_type: "",
-  currency_amount: "",
-  travel_date: "",
+  cruise_type: "",
+  pickup_date: "",
+  passengers: "1",
   name: "",
-  phone: "",
   email: "",
+  phone: "",
   message: "",
 };
 
@@ -36,26 +47,19 @@ function getTrackingFields() {
   };
 }
 
-function buildForexMessage(formData) {
-  const currencyAmount = normalizeCurrencyAmount(formData.currency_amount);
+function buildCruiseEnquiryMessage(formData) {
   const lines = [
-    "Forex enquiry",
-    `Type: ${formData.currency_type}`,
-    `Value: ${currencyAmount}`,
-    `Travel Date: ${formData.travel_date}`,
+    "Cruise enquiry",
+    `Cruise Type: ${formData.cruise_type}`,
+    `Departure Date: ${formData.pickup_date}`,
+    `Passengers: ${formData.passengers}`,
     formData.message.trim() ? `Message: ${formData.message.trim()}` : null,
   ];
 
   return lines.filter(Boolean).join("\n");
 }
 
-function normalizeCurrencyAmount(value) {
-  const amount = value.trim().replace(/,/g, "");
-
-  return /^\d+$/.test(amount) ? `${amount}.00` : amount;
-}
-
-export default function ForexEnquiryForm() {
+export default function CruiseEnquiryForm() {
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
@@ -68,20 +72,18 @@ export default function ForexEnquiryForm() {
   const validate = () => {
     const nextErrors = {};
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const currencyAmount = normalizeCurrencyAmount(formData.currency_amount);
+    const passengerCount = Number(formData.passengers);
 
-    if (!formData.currency_type) nextErrors.currency_type = "Please select currency or card.";
-    if (!currencyAmount) {
-      nextErrors.currency_amount = "Please enter the value.";
-    } else if (!/^\d+(\.\d+)?$/.test(currencyAmount)) {
-      nextErrors.currency_amount = "Please enter a valid decimal amount.";
+    if (!formData.cruise_type) nextErrors.cruise_type = "Please select cruise type.";
+    if (!formData.pickup_date) nextErrors.pickup_date = "Please select departure date.";
+    if (!Number.isInteger(passengerCount) || passengerCount <= 0) {
+      nextErrors.passengers = "Please enter at least 1 passenger.";
     }
-    if (!formData.travel_date) nextErrors.travel_date = "Please select your travel date.";
     if (!formData.name.trim()) nextErrors.name = "Please enter your name.";
-    if (!formData.phone.trim()) nextErrors.phone = "Please enter your phone number.";
-    if (formData.email.trim() && !emailPattern.test(formData.email.trim())) {
+   if (formData.email.trim() && !emailPattern.test(formData.email.trim())) {
       nextErrors.email = "Please enter a valid email address.";
     }
+    if (!formData.phone.trim()) nextErrors.phone = "Please enter your phone number.";
     if (!turnstileToken) nextErrors.turnstile = "Please complete the CAPTCHA.";
 
     return nextErrors;
@@ -102,13 +104,8 @@ export default function ForexEnquiryForm() {
       }));
     }
 
-    if (apiError) {
-      setApiError("");
-    }
-
-    if (submitNotice) {
-      setSubmitNotice("");
-    }
+    if (apiError) setApiError("");
+    if (submitNotice) setSubmitNotice("");
   };
 
   const handleSubmit = async (event) => {
@@ -127,25 +124,19 @@ export default function ForexEnquiryForm() {
     setErrors({});
     setApiError("");
     setSuccessMessage("");
-    setSubmitNotice("Submitting your forex enquiry...");
+    setSubmitNotice("Submitting your cruise enquiry...");
 
     try {
-      const currencyType = formData.currency_type.trim();
-      const currencyAmount = normalizeCurrencyAmount(formData.currency_amount);
-
       await submitContactEnquiry({
-        enquiry_type: "forex",
+        enquiry_type: "cruise",
+        cruise_type: formData.cruise_type,
+        pickup_date: formData.pickup_date,
+        passengers: Number(formData.passengers),
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: formData.phone.trim(),
-        currency_type: currencyType,
-        currency_amount: currencyAmount,
-        forex_type: currencyType,
-        forex_amount: currencyAmount,
-        value: currencyAmount,
-        subject: `Forex enquiry - ${currencyType}`,
-        message: buildForexMessage(formData),
-        travel_date: formData.travel_date,
+        subject: formData.cruise_type.trim(),
+        message: buildCruiseEnquiryMessage(formData),
         turnstile_token: turnstileToken,
         ...getTrackingFields(),
       });
@@ -154,14 +145,14 @@ export default function ForexEnquiryForm() {
       setTurnstileToken("");
       setCaptchaKey((current) => current + 1);
       setSubmitNotice("");
-      setSuccessMessage("Thank you. Our forex team will contact you shortly.");
+      setSuccessMessage("Thank you. Our cruise team will contact you shortly.");
     } catch (error) {
       setSubmitNotice("");
       if (error instanceof ContactEnquiryError) {
         setErrors(normalizeSubmitErrors(error.errors));
         setApiError(error.message);
       } else {
-        setApiError("Unable to submit forex enquiry. Please try again.");
+        setApiError("Unable to submit cruise enquiry. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -170,9 +161,9 @@ export default function ForexEnquiryForm() {
 
   return (
     <div className="service-form-box h-100">
-      <span className="service-form-eyebrow">Forex Question</span>
+      <span className="service-form-eyebrow">Plan Your Cruise</span>
       <p className="service-form-intro">
-        Share your currency or card requirement and our team will help with the next steps.
+        Share your cruise style, departure date, and traveller count so our team can help.
       </p>
 
       {successMessage ? (
@@ -194,59 +185,64 @@ export default function ForexEnquiryForm() {
       ) : null}
 
       <form className="service-enquiry-form" onSubmit={handleSubmit} noValidate>
-        <div className="forex-form-field">
+        <div>
           <label className="service-field">
-            <i className="fa fa-credit-card" aria-hidden="true"></i>
+            <i className="fa fa-ship" aria-hidden="true"></i>
             <select
-              name="currency_type"
-              value={formData.currency_type}
+              name="cruise_type"
+              value={formData.cruise_type}
               onChange={handleChange}
-              aria-invalid={Boolean(errors.currency_type)}
+              aria-invalid={Boolean(errors.cruise_type)}
             >
-              <option value="">Type: Currency / Card *</option>
-              <option value="Currency">Currency</option>
-              <option value="Card">Card</option>
+              <option value="">Cruise Type *</option>
+              {cruiseTypes.map((cruiseType) => (
+                <option value={cruiseType} key={cruiseType}>
+                  {cruiseType}
+                </option>
+              ))}
             </select>
           </label>
-          {errors.currency_type ? (
-            <span className="contact-field-error">{getErrorText(errors.currency_type)}</span>
+          {errors.cruise_type ? (
+            <span className="contact-field-error">{getErrorText(errors.cruise_type)}</span>
           ) : null}
         </div>
 
-        <div className="forex-form-field">
-          <label className="service-field">
-            <i className="fa fa-money" aria-hidden="true"></i>
-            <input
-              type="text"
-              name="currency_amount"
-              placeholder="Value *"
-              inputMode="decimal"
-              value={formData.currency_amount}
-              onChange={handleChange}
-              aria-invalid={Boolean(errors.currency_amount)}
-            />
-          </label>
-          {errors.currency_amount ? (
-            <span className="contact-field-error">{getErrorText(errors.currency_amount)}</span>
-          ) : null}
-        </div>
-
-        <div className="forex-form-field">
-          <label className="service-field forex-travel-date-field">
-            <i className="fa fa-calendar" aria-hidden="true"></i>
-            <input
-              type="date"
-              name="travel_date"
-              value={formData.travel_date}
-              onChange={handleChange}
-              min={new Date().toISOString().split("T")[0]}
-              aria-invalid={Boolean(errors.travel_date)}
-            />
-            <span className="forex-travel-date-label">Travel Date *</span>
-          </label>
-          {errors.travel_date ? (
-            <span className="contact-field-error">{getErrorText(errors.travel_date)}</span>
-          ) : null}
+        <div className="service-form-grid">
+          <div>
+            <span className="service-date-label">Departure Date *</span>
+            <label className="service-field">
+              <i className="fa fa-calendar" aria-hidden="true"></i>
+              <input
+                type="date"
+                name="pickup_date"
+                value={formData.pickup_date}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.pickup_date)}
+              />
+            </label>
+            {errors.pickup_date ? (
+              <span className="contact-field-error">{getErrorText(errors.pickup_date)}</span>
+            ) : null}
+          </div>
+          <div>
+            <span className="service-date-label">Passengers *</span>
+            <label className="service-field">
+              <i className="fa fa-users" aria-hidden="true"></i>
+              <input
+                type="number"
+                name="passengers"
+                placeholder="Passengers *"
+                min="1"
+                step="1"
+                value={formData.passengers}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.passengers)}
+              />
+            </label>
+            {errors.passengers ? (
+              <span className="contact-field-error">{getErrorText(errors.passengers)}</span>
+            ) : null}
+          </div>
         </div>
 
         <div className="service-form-grid">
@@ -292,7 +288,7 @@ export default function ForexEnquiryForm() {
 
         <textarea
           name="message"
-          placeholder="Any preferred currency, country, or note?"
+          placeholder="Preferred route, cabin, budget, or special request?"
           rows="3"
           value={formData.message}
           onChange={handleChange}
@@ -327,9 +323,9 @@ export default function ForexEnquiryForm() {
           ) : null}
         </div>
 
-        <button type="submit" disabled={isSubmitting}>
+        <button type="submit" className="service-availability-submit" disabled={isSubmitting}>
           <i className="fa fa-paper-plane" aria-hidden="true"></i>
-          {isSubmitting ? "Submitting..." : "Submit Forex Enquiry"}
+          {isSubmitting ? "Submitting..." : "Submit Cruise Enquiry"}
         </button>
       </form>
     </div>

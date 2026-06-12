@@ -5,28 +5,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 
-const menuItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/destinations", label: "Destinations" },
-  {
-    href: "/hotels",
-    label: "Services",
-    children: [
-      { href: "/hotels", label: "Hotels" },
-      { href: "/flights", label: "Flights" },
-      { href: "/cars", label: "Cars" },
-      { href: "/cruises", label: "Cruise" },
-      { href: "/visa", label: "Visa" },
-      { href: "/forex", label: "Forex" },
-    ],
-  },
-//   { href: "/packages", label: "Packages" },
-  { href: "/contact", label: "Contact Us" },
-];
+function buildMenuItems(services = []) {
+    const activeServices = Array.isArray(services) ? services : [];
+    const items = [
+        { href: "/", label: "Home" },
+        { href: "/about", label: "About Us" },
+        { href: "/destinations", label: "Destinations" },
+    ];
 
-export default function Header() {
+    if (activeServices.length) {
+        items.push({
+            href: activeServices[0].href,
+            label: "Services",
+            children: activeServices.map((service) => ({
+                href: service.href,
+                label: service.label,
+            })),
+        });
+    }
+
+    items.push(
+        //   { href: "/packages", label: "Packages" },
+        { href: "/contact", label: "Contact Us" }
+    );
+
+    return items;
+}
+
+export default function Header({ services = [] }) {
     const pathname = usePathname();
+    const menuItems = buildMenuItems(services);
     const isServicesPath = menuItems.some((item) =>
         item.children?.some((child) =>
             child.href === "/" ? pathname === child.href : pathname?.startsWith(child.href)
@@ -85,11 +93,11 @@ export default function Header() {
             <div className={`header_menu${isHidden ? " hide" : ""}`} id="header_menu">
                 <nav className={`navbar navbar-default${isSticky ? " navbar-sticky-in" : ""}`}>
                     <div className="container">
-                        <div className="navbar-flex d-flex align-items-center justify-content-between w-100 pb-2 pt-2">
+                        <div className="navbar-flex d-flex align-items-center justify-content-between w-100 pb-1 pt-1">
 
                             <div className="navbar-header">
                                 <Link className="navbar-brand" href="/">
-                                    <img src="/images/eboo-textlogo.png"  alt="Eboo Logo" />
+                                    <img src="/images/eboo-textlogo.png" alt="Eboo Logo" />
                                 </Link>
                             </div>
 

@@ -3,12 +3,12 @@ import Link from "next/link";
 export default function PageBanner({
   title,
   breadcrumbLabel = title,
-  backgroundImage = "/images/bg/bg8.jpg",
+  bannerBG,
 }) {
   return (
     <section
       className="breadcrumb-main pb-0"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{ backgroundImage: `url(${bannerBG || "/images/bg/bg8.jpg"})` }}
     >
       <div className="breadcrumb-outer">
         <div className="container">

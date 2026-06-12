@@ -4,6 +4,7 @@ export const metadata = {
 };
 
 import ForexEnquiryForm from "@/components/forex/ForexEnquiryForm";
+import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import HeroSection from "@/components/home/HeroSection";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
 
@@ -79,19 +80,11 @@ export default async function ForexPage() {
               Forex <span>Gallery</span>
             </h2>
           </div>
-          {forexGallery.length ? (
-            <div className="row">
-              {forexGallery.map((image, index) => (
-                <div className="col-lg-4 col-md-6 mb-4" key={image.id || image.src}>
-                  <div className="service-gallery-item">
-                    <img src={image.src} alt={`Forex gallery ${index + 1}`} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center mb-0">No forex gallery images found.</p>
-          )}
+          <ServiceGalleryLightbox
+            images={forexGallery}
+            title="Forex"
+            emptyMessage="No forex gallery images found."
+          />
         </div>
       </section>
     </>

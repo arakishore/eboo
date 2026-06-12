@@ -535,7 +535,7 @@ export default function HotelEnquiryForm() {
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
+              placeholder="Full Name  *"
               value={formData.name}
               onChange={handleChange}
               aria-invalid={Boolean(errors.name)}
@@ -548,7 +548,7 @@ export default function HotelEnquiryForm() {
             <input
               type="tel"
               name="phone"
-              placeholder="Phone Number"
+              placeholder="Phone Number  *"
               value={formData.phone}
               onChange={handleChange}
               aria-invalid={Boolean(errors.phone)}

@@ -5,6 +5,7 @@ export const metadata = {
 
 import HeroSection from "@/components/home/HeroSection";
 import HotelEnquiryForm from "@/components/hotels/HotelEnquiryForm";
+import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
 
 const hotelFeatures = [
@@ -78,26 +79,19 @@ export default async function HotelsPage() {
 
       <section className="service-gallery-section">
         <div className="container">
-          <div className="section-title text-center mb-5 pb-2 w-50 mx-auto">
+          <div className="section-title text-center mb-5 pb-2  mx-auto">
             <h2 className="m-0">
               Hotels <span>Gallery</span>
             </h2>
           </div>
-          {hotelGallery.length ? (
-            <div className="row">
-              {hotelGallery.map((image, index) => (
-                <div className="col-lg-4 col-md-6 mb-4" key={image.id || image.src}>
-                  <div className="service-gallery-item">
-                    <img src={image.src} alt={`Hotel gallery ${index + 1}`} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center mb-0">No hotel gallery images found.</p>
-          )}
+          <ServiceGalleryLightbox
+            images={hotelGallery}
+            title="Hotel"
+            emptyMessage="No hotel gallery images found."
+          />
         </div>
       </section>
+      
     </>
   );
 }

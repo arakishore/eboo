@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PartnersLogoSlider from "@/components/PartnersLogoSlider";
 import { siteConfig } from "@/config/site";
-import { getApiCollection } from "@/lib/api";
+import { getApiCollection, getServices } from "@/lib/api";
 
 export const metadata = {
   title: siteConfig.seo.defaultTitle,
@@ -13,7 +13,10 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const partners = await getApiCollection("partners", []);
+  const [partners, servicesMenu] = await Promise.all([
+    getApiCollection("partners", []),
+    getServices(),
+  ]);
 
   return (
     <html lang="en">
@@ -38,7 +41,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body suppressHydrationWarning={true}>
         
-        <Header />
+        <Header services={servicesMenu} />
         {children}
         <PartnersLogoSlider logos={partners} />
         <Footer />

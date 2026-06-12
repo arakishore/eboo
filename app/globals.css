@@ -491,9 +491,9 @@ h6 span {
 .service-date-label {
   display: block;
   margin-bottom: 6px;
-  color: #17233e;
+  
   font-size: 13px;
-  font-weight: 700;
+  
   line-height: 1.2;
 }
 
@@ -624,6 +624,21 @@ h6 span {
 
 .service-gallery-item:hover img {
   transform: scale(1.06);
+}
+
+.service-gallery-button {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.service-gallery-button img {
+  height: 100%;
 }
 
 .header_menu #slicknav-mobile {
