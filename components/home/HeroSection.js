@@ -46,16 +46,26 @@ export default function HeroSection({ banners = [] }) {
           speed={1200}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
         >
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             <SwiperSlide key={`${slide.title}-${slide.image}`}>
               <div className="slide-inner">
                 <div
                   className="slide-image"
                   style={{ backgroundImage: `url(${slide.image})` }}
                 ></div>
+
                 <div className={slide.contentClass}>
-                  {slide.title ? <h1 className="hero-title white mb-2">{slide.title}</h1> : null}
-                  {slide.description ? <p className="white mb-4">{slide.description}</p> : null}
+                  {slide.title &&
+                    (index === 0 ? (
+                      <h1 className="hero-title white mb-2">{slide.title}</h1>
+                    ) : (
+                      <h2 className="hero-title white mb-2">{slide.title}</h2>
+                    ))}
+
+                  {slide.description ? (
+                    <p className="white mb-4">{slide.description}</p>
+                  ) : null}
+
                   {slide.link && slide.buttonText ? (
                     <Link href={slide.link} className="per-btn">
                       <span className="white">{slide.buttonText}</span>
@@ -63,6 +73,7 @@ export default function HeroSection({ banners = [] }) {
                     </Link>
                   ) : null}
                 </div>
+
                 <div className="overlay"></div>
               </div>
             </SwiperSlide>
