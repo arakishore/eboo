@@ -46,7 +46,6 @@ export default async function RootLayout({ children }) {
         <Footer />
         <Script src="/js/jquery-3.5.1.min.js" strategy="beforeInteractive" />
         <Script src="/js/bootstrap.min.js" strategy="afterInteractive" />
-       
         {/* custom-swiper2.js is disabled because HeroSection uses Swiper React. */}
       </body>
     </html>
