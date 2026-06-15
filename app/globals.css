@@ -1707,3 +1707,8 @@ h6 span {
     height: 4px;
     background: #f56961;
   }
+
+
+.form-group {
+    margin-bottom: 1rem;
+}

@@ -10,17 +10,17 @@ export default function NotFoundContent({
   secondaryLabel,
 }) {
   return (
-    <section className="error eboo-not-found overflow-hidden">
+    <section className="error eboo-not-found overflow-hidden p-0">
       <div className="container">
         <div className="error-content text-center">
           <p className="not-found-kicker mb-1">404</p>
-          <h1 className="mb-2">{title}</h1>
+          <h1 className="mb-1">{title}</h1>
           <div className="not-found-image mb-4">
             <Image
               src="/images/404-1.svg"
               alt=""
-              width={720}
-              height={360}
+              width={250}
+              height={200}
               priority
             />
           </div>

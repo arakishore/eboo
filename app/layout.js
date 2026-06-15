@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import PartnersLogoSlider from "@/components/PartnersLogoSlider";
 import { siteConfig } from "@/config/site";
 import { getApiCollection, getServices } from "@/lib/api";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 export const metadata = {
   title: siteConfig.seo.defaultTitle,
   description: siteConfig.seo.defaultDescription,
@@ -23,7 +23,6 @@ export default async function RootLayout({ children }) {
       <head>
         <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="/css/style.css" rel="stylesheet" type="text/css" />
         <link href="/css/plugin.css" rel="stylesheet" type="text/css" />
         <link href="/css/about.css" rel="stylesheet" type="text/css" />
@@ -45,24 +44,9 @@ export default async function RootLayout({ children }) {
         {children}
         <PartnersLogoSlider logos={partners} />
         <Footer />
-        <div id="back-to-top">
-          <a href="#"></a>
-        </div>
-        <div id="search1">
-          <button type="button" className="close">
-            x
-          </button>
-          <form>
-            <input type="search" value="" placeholder="type keyword(s) here" readOnly />
-            <button type="submit" className="btn btn-primary">
-              Search
-            </button>
-          </form>
-        </div>
         <Script src="/js/jquery-3.5.1.min.js" strategy="beforeInteractive" />
         <Script src="/js/bootstrap.min.js" strategy="afterInteractive" />
-        <Script src="/js/plugin.js" strategy="afterInteractive" />
-        <Script src="/js/main.js" strategy="afterInteractive" />
+       
         {/* custom-swiper2.js is disabled because HeroSection uses Swiper React. */}
       </body>
     </html>

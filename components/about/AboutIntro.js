@@ -2,9 +2,9 @@ import ScrollReveal from "@/components/common/ScrollReveal";
 
 export default function AboutIntro() {
   return (
-    <section className="about-split about-spacing">
+    <section className="about-split about-spacing pt-0">
       <div className="container">
-        <div className="row">
+        <div className="row align-items-center">
           <div className="col-lg-6 mb-4 mb-lg-0">
             <ScrollReveal direction="left" className="about-image-frame">
               <img src="/images/dummy-eboo.png" alt="Travelers exploring a scenic destination" />

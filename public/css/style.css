@@ -6083,7 +6083,7 @@ section.booking .booking-box .soc-log a.facebook-log:hover {
   height: 100vh;
 }
 .error .error-content {
-  width: 60%;
+  width: 40%;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -6092,9 +6092,8 @@ section.booking .booking-box .soc-log a.facebook-log:hover {
   color: #162241;
 }
 .error .error-content h1 {
-  font-size: 252px;
+  font-size: 52px;
   margin: 0px;
-  color: #fff;
   line-height: 1;
 }
 .error .error-content h1 span {
