@@ -5,12 +5,22 @@ import Image from "next/image";
 import { gridImages } from "@/data/images";
 
 const HEADLINE = "Showing you World through EBOO eyes";
+const GRID_IMAGE_COUNT = 9;
 
-export default function HeroScroll() {
+function getHeroImages(images = []) {
+  const combinedImages = [...images, ...gridImages]
+    .filter((image) => image?.src)
+    .filter((image, index, self) => self.findIndex((item) => item.src === image.src) === index);
+
+  return combinedImages.slice(0, GRID_IMAGE_COUNT);
+}
+
+export default function AboutHero({ images = [] }) {
   const sectionRef = useRef(null);
   const gridRef = useRef(null);
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
+  const heroImages = getHeroImages(images);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -47,9 +57,9 @@ export default function HeroScroll() {
             className="hero-scroll-grid"
             style={{ transform: "scale(3.2)" }}
           >
-            {gridImages.map((img, index) => (
+            {heroImages.map((img, index) => (
               <div
-                key={img.src}
+                key={`${img.src}-${index}`}
                 className={`hero-scroll-cell ${
                   index !== 1 && index !== 4 && index !== 7
                     ? "hero-scroll-cell--mobile-hidden"
@@ -63,6 +73,7 @@ export default function HeroScroll() {
                   priority={index === 4}
                   className="object-fit-cover"
                   sizes="33vw"
+                  unoptimized
                 />
               </div>
             ))}
