@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 
@@ -89,17 +88,17 @@ function getRouteName(pathname, prefix) {
 
 export default function WhatsAppFloatingButton() {
   const pathname = usePathname();
+  const normalizedPathname = pathname?.replace(/\/$/, "") || "/";
 
-  const whatsappUrl = useMemo(() => {
-    const whatsappNumber = siteConfig.contact.whatsapp.replace(/\D/g, "");
-    const message = getWhatsAppMessage(pathname);
+  if (normalizedPathname.startsWith("/packages/")) {
+    return null;
+  }
 
-    if (!whatsappNumber) return "";
-
-    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      message
-    )}`;
-  }, [pathname]);
+  const whatsappNumber = siteConfig.contact.whatsapp.replace(/\D/g, "");
+  const message = getWhatsAppMessage(normalizedPathname);
+  const whatsappUrl = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+    : "";
 
   if (!whatsappUrl) return null;
 
