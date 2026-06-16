@@ -2715,6 +2715,11 @@ nav.navbar.navbar-default.navbar-sticky-in .logo-black {
   letter-spacing: 1px;
   font-weight: 700;
 }
+.banner .slider .swiper-container .swiper-slide .slide-inner .swiper-content > h2 {
+  font-size: 58px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
 .banner .slider .swiper-container .swiper-slide .slide-inner .swiper-content1 {
   top: 52%;
   transform: translateY(-52%);

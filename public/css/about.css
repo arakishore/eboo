@@ -336,7 +336,7 @@
   font-weight: 900;
   line-height: 1.1;
   color: #fff;
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: clamp(42px, 6vw, 72px);
 }
 
 .letter {

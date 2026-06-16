@@ -78,9 +78,9 @@ export default async function CarsPage() {
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2   mx-auto">
-            <h2 className="m-0">
+            <h3 className="m-0">
               Your Comfortable Journey With Us.
-            </h2>
+            </h3>
           </div>
           <ServiceGalleryLightbox
             images={carGallery}
