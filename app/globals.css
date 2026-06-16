@@ -165,6 +165,123 @@ h6 span {
   color: #F56961;
 }
 
+@media (max-width: 767px) {
+  .why-us .services-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0 2px;
+  }
+
+  .why-us .services-mobile-grid > [class*="col-"] {
+    width: auto;
+    max-width: none;
+    margin-bottom: 0 !important;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .why-us .why-us-item {
+    min-height: 98px;
+    padding: 12px 6px;
+    border-radius: 14px;
+    background: #fff !important;
+    box-shadow: 0 10px 24px rgba(22, 34, 65, 0.08);
+  }
+
+  .why-us .why-us-item a {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .why-us .why-us-icon {
+    margin-bottom: 6px !important;
+  }
+
+  .why-us .why-us-icon img {
+    width: 42px !important;
+    height: auto;
+  }
+
+  .why-us .why-us-content h4 {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.2;
+    word-break: normal;
+  }
+
+  .why-us .why-us-content p {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .why-us .services-mobile-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .why-us .travel-types-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0 2px;
+  }
+
+  .why-us .travel-types-mobile-grid > [class*="col-"] {
+    width: auto;
+    max-width: none;
+    margin-bottom: 0 !important;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .why-us .travel-types-mobile-grid .why-us-item {
+    min-height: 150px;
+    padding: 16px 10px;
+    border-radius: 14px;
+    background: #fff !important;
+    box-shadow: 0 10px 24px rgba(22, 34, 65, 0.08);
+  }
+
+  .why-us .travel-types-mobile-grid .why-us-icon {
+    margin-bottom: 6px !important;
+  }
+
+  .why-us .travel-types-mobile-grid .why-us-icon img {
+    width: 48px !important;
+    height: auto;
+  }
+
+  .why-us .travel-types-mobile-grid .why-us-content h4 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    word-break: normal;
+  }
+
+  .why-us .travel-types-mobile-grid .why-us-content p {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 380px) {
+  .why-us .travel-types-mobile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .partners-logo-section {
   background: #fff;
   z-index: 0;

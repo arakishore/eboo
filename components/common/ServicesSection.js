@@ -1,123 +1,105 @@
 import Link from "next/link";
+import ScrollReveal from "@/components/common/ScrollReveal";
+
+const services = [
+  {
+    href: "/destinations",
+    icon: "/images/icons/world-tour.png",
+    title: "Tour Packages",
+    description:
+      "Meticulously Crafted tours, Exclusively curated for Perfection, giving you Unforgettable Memories.",
+  },
+  {
+    href: "/hotels",
+    icon: "/images/icons/desert.png",
+    title: "Hotel",
+    description:
+      "Great offers for Luxury stays in tranquil natural retreats, providing the comfort and warmth of home.",
+  },
+  {
+    href: "/flights",
+    icon: "/images/icons/airplane-ticket.png",
+    title: "Flight",
+    description: "Your Best Flight Deals is just One Click Away.",
+  },
+  {
+    href: "/cruises",
+    icon: "/images/icons/cruise.png",
+    title: "Cruise",
+    description: "Enjoy the Ultimate Voyage on Elite Cruises across globe curated for the Discerning",
+  },
+  {
+    href: "/cars",
+    icon: "/images/icons/bus-color.png",
+    title: "Cars",
+    description:
+      "Experience seamless travel in comfortable car and bus rentals, featuring genuine local drivers and 24/7 round-the-clock support",
+  },
+  {
+    href: "/forex",
+    icon: "/images/icons/currency-card-color.png",
+    title: "Forex",
+    description:
+      "Get the ultimate convenience of Forex cards and currency exchange delivered to your doorstep, all at competitive rates.",
+  },
+  {
+    href: "/visa",
+    icon: "/images/icons/visa-trave.png",
+    title: "Visa",
+    description:
+      "Entrust your visa needs to our qualified team, who provide hassle-free services with on-time delivery for all major destinations worldwide.",
+  },
+  {
+    href: "/mice",
+    icon: "/images/icons/Mice.png",
+    title: "MICE",
+    description:
+      "Trust us to manage all aspects of your next corporate event, so you can focus on your business goals",
+  },
+];
+
 export default function ServicesSection() {
-    return (
-        <section className=" pb-6">
-            <div className="container">
+  return (
+    <section className="pb-6">
+      <div className="container">
+        <div className="section-title text-center mb-5 pb-2 w-50 mx-auto">
+          <h2 className="m-0">
+            Travel <span>Services We Offer</span>
+          </h2>
+          <p className="mb-0">
+            Everything you need for a seamless journey, from planning and booking to
+            transportation, visas, and foreign exchange.
+          </p>
+        </div>
 
-                <div className="why-us pt-4 border-t">
-                    <div className="why-us-box">
-                        <div className="row">
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/destinations">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/world-tour.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>Tour Packages</h4>
-                                            <p className="mb-0">Meticulously Crafted tours, Exclusively curated for Perfection, giving you Unforgettable Memories.</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/hotels"><div className="why-us-icon mb-2">
-                                        <img src="/images/icons/desert.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                    </div>
-                                    <div className="why-us-content">
-                                        <h4>Hotel</h4>
-                                        <p className="mb-0">Great offers for Luxury stays in tranquil natural retreats, providing the comfort and warmth of home.</p>
-                                    </div>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/flights">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/airplane-ticket.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>Flight</h4>
-                                            <p className="mb-0">Your Best Flight Deals is just One Click Away.</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/cruises">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/cruise.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>Cruise</h4>
-                                            <p className="mb-0">Enjoy the Ultimate Voyage on Elite Cruises across globe curated for the Discerning</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/cars">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/bus-color.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>Cars</h4>
-                                            <p className="mb-0">Experience seamless travel in comfortable car and bus rentals, featuring genuine local drivers and 24/7 round-the-clock support</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/forex">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/currency-card-color.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>Forex</h4>
-                                            <p className="mb-0">Get the ultimate convenience of Forex cards and currency exchange delivered to your doorstep, all at competitive rates.</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/visa">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/visa-trave.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>Visa</h4>
-                                            <p className="mb-0">Entrust your visa needs to our qualified team, who provide hassle-free services with on-time delivery for all major destinations worldwide.</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6 mb-4">
-                                <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
-                                    <Link href="/mice">
-                                        <div className="why-us-icon mb-2">
-                                            <img src="/images/icons/Mice.png" alt="" style={{ width: "86px", height: "auto" }} />
-                                        </div>
-                                        <div className="why-us-content">
-                                            <h4>MICE</h4>
-                                            <p className="mb-0">Trust us to manage all aspects of your next corporate event, so you can focus on your business goals</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-
+        <div className="why-us pt-4 border-t">
+          <div className="why-us-box">
+            <div className="row services-mobile-grid">
+              {services.map((service, index) => (
+                <div className="col-3 col-md-6 col-lg-3 mb-4" key={service.href}>
+                  <ScrollReveal direction="up" delay={index * 0.06} className="h-100">
+                    <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">
+                      <Link href={service.href}>
+                        <div className="why-us-icon mb-2">
+                          <img
+                            src={service.icon}
+                            alt=""
+                            style={{ width: "86px", height: "auto" }}
+                          />
                         </div>
+                        <div className="why-us-content">
+                          <h4>{service.title}</h4>
+                          <p className="mb-0">{service.description}</p>
+                        </div>
+                      </Link>
                     </div>
+                  </ScrollReveal>
                 </div>
-
+              ))}
             </div>
-        </section>
-
-    );
-}   
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
