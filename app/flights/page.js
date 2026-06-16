@@ -8,6 +8,7 @@ import HeroSection from "@/components/home/HeroSection";
 import FlightEnquiryForm from "@/components/flights/FlightEnquiryForm";
 import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
+import ServicesSection from "@/components/common/ServicesSection";
 
 const flightFeatures = [
   "Domestic & International Flights",
@@ -76,7 +77,7 @@ export default async function FlightsPage() {
           </div>
         </div>
       </section>
-
+      <ServicesSection />            
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2   mx-auto">

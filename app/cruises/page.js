@@ -7,6 +7,7 @@ import HeroSection from "@/components/home/HeroSection";
 import CruiseEnquiryForm from "@/components/cruises/CruiseEnquiryForm";
 import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
+import ServicesSection from "@/components/common/ServicesSection";
 
 const cruiseFeatures = [
   "Ocean & River Cruise Planning",
@@ -81,7 +82,8 @@ export default async function CruisesPage() {
           </div>
         </div>
       </section>
-
+      
+      <ServicesSection />
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2  mx-auto">

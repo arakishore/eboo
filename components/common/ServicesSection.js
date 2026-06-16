@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ScrollReveal from "@/components/common/ScrollReveal";
 
 const services = [
   {
     href: "/destinations",
+    matchPaths: ["/destinations", "/packages"],
     icon: "/images/icons/world-tour.png",
     title: "Tour Packages",
     description:
@@ -11,6 +15,7 @@ const services = [
   },
   {
     href: "/hotels",
+    matchPaths: ["/hotels"],
     icon: "/images/icons/desert.png",
     title: "Hotel",
     description:
@@ -18,18 +23,21 @@ const services = [
   },
   {
     href: "/flights",
+    matchPaths: ["/flights"],
     icon: "/images/icons/airplane-ticket.png",
     title: "Flight",
     description: "Your Best Flight Deals is just One Click Away.",
   },
   {
     href: "/cruises",
+    matchPaths: ["/cruises", "/cruise"],
     icon: "/images/icons/cruise.png",
     title: "Cruise",
     description: "Enjoy the Ultimate Voyage on Elite Cruises across globe curated for the Discerning",
   },
   {
     href: "/cars",
+    matchPaths: ["/cars"],
     icon: "/images/icons/bus-color.png",
     title: "Cars",
     description:
@@ -37,6 +45,7 @@ const services = [
   },
   {
     href: "/forex",
+    matchPaths: ["/forex"],
     icon: "/images/icons/currency-card-color.png",
     title: "Forex",
     description:
@@ -44,6 +53,7 @@ const services = [
   },
   {
     href: "/visa",
+    matchPaths: ["/visa"],
     icon: "/images/icons/visa-trave.png",
     title: "Visa",
     description:
@@ -51,6 +61,7 @@ const services = [
   },
   {
     href: "/mice",
+    matchPaths: ["/mice", "/mices"],
     icon: "/images/icons/Mice.png",
     title: "MICE",
     description:
@@ -59,6 +70,12 @@ const services = [
 ];
 
 export default function ServicesSection() {
+  const pathname = usePathname();
+  const normalizedPathname = pathname?.replace(/\/$/, "") || "/";
+  const visibleServices = services.filter(
+    (service) => !service.matchPaths.includes(normalizedPathname)
+  );
+
   return (
     <section className="pb-6">
       <div className="container">
@@ -75,7 +92,7 @@ export default function ServicesSection() {
         <div className="why-us pt-4 border-t">
           <div className="why-us-box">
             <div className="row services-mobile-grid">
-              {services.map((service, index) => (
+              {visibleServices.map((service, index) => (
                 <div className="col-3 col-md-6 col-lg-3 mb-4" key={service.href}>
                   <ScrollReveal direction="up" delay={index * 0.06} className="h-100">
                     <div className="why-us-item text-center bg-lgrey h-100 d-flex flex-column">

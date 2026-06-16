@@ -7,6 +7,7 @@ import ForexEnquiryForm from "@/components/forex/ForexEnquiryForm";
 import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import HeroSection from "@/components/home/HeroSection";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
+import ServicesSection from "@/components/common/ServicesSection";
 
 const forexFeatures = [
   "Best Exchange Rates",
@@ -72,7 +73,7 @@ export default async function ForexPage() {
           </div>
         </div>
       </section>
-
+    <ServicesSection />            
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2 w-50 mx-auto">

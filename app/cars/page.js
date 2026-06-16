@@ -7,6 +7,7 @@ export const metadata = {
 import HeroSection from "@/components/home/HeroSection";
 import CarEnquiryForm from "@/components/cars/CarEnquiryForm";
 import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
+import ServicesSection from "@/components/common/ServicesSection";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
 
 const carFeatures = [
@@ -74,7 +75,7 @@ export default async function CarsPage() {
           </div>
         </div>
       </section>
-
+      <ServicesSection />
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2   mx-auto">

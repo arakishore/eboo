@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import PartnersLogoSlider from "@/components/PartnersLogoSlider";
+import WhatsAppFloatingButton from "@/components/common/WhatsAppFloatingButton";
 import { siteConfig } from "@/config/site";
 import { getApiCollection, getServices } from "@/lib/api";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -44,6 +45,7 @@ export default async function RootLayout({ children }) {
         {children}
         <PartnersLogoSlider logos={partners} />
         <Footer />
+        <WhatsAppFloatingButton />
         <Script src="/js/jquery-3.5.1.min.js" strategy="beforeInteractive" />
         <Script src="/js/bootstrap.min.js" strategy="afterInteractive" />
         {/* custom-swiper2.js is disabled because HeroSection uses Swiper React. */}

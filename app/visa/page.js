@@ -7,6 +7,7 @@ import HeroSection from "@/components/home/HeroSection";
 import VisaEnquiryForm from "@/components/visa/VisaEnquiryForm";
 import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import { apiGet, getApiCollection, getCountries, toApiImageUrl } from "@/lib/api";
+import ServicesSection from "@/components/common/ServicesSection";
 
 const visaFeatures = [
   "Visa Application Assistance",
@@ -83,7 +84,7 @@ export default async function VisaPage() {
           </div>
         </div>
       </section>
-
+      <ServicesSection />
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2  mx-auto">

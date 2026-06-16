@@ -7,6 +7,7 @@ import HeroSection from "@/components/home/HeroSection";
 import HotelEnquiryForm from "@/components/hotels/HotelEnquiryForm";
 import ServiceGalleryLightbox from "@/components/common/ServiceGalleryLightbox";
 import { apiGet, getApiCollection, toApiImageUrl } from "@/lib/api";
+import ServicesSection from "@/components/common/ServicesSection";
 
 const hotelFeatures = [
   "Safety Hotel System",
@@ -76,7 +77,7 @@ export default async function HotelsPage() {
           </div>
         </div>
       </section>
-
+      <ServicesSection />
       <section className="service-gallery-section">
         <div className="container">
           <div className="section-title text-center mb-5 pb-2  mx-auto">
@@ -91,7 +92,7 @@ export default async function HotelsPage() {
           />
         </div>
       </section>
-      
+
     </>
   );
 }

@@ -151,9 +151,9 @@ export default async function DestinationDetailPage({ params }) {
                   <a href="#destination-packages" className="nir-btn mr-2">
                     View Packages
                   </a>
-                  <Link href="/contact" className="nir-btn-black">
+                  {/* <Link href="/contact" className="nir-btn-black">
                     Enquire Now
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
